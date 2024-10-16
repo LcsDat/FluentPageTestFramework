@@ -47,6 +47,6 @@ public class LoginTestSuite {
     @Test
     public void TC04_LoginWithValidCredentials(){
         loginPage.clearText(Locator.NAME,"username").clearText(Locator.NAME,"password").setText(Locator.NAME,"username","hideyashy").setText(Locator.NAME,"password","#Onimusha00").click(Locator.CSS,"button");
-
+        System.out.println("hello");
     }
 }
