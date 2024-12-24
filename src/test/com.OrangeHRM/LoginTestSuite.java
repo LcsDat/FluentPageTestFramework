@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 import java.time.Duration;
 
 public class LoginTestSuite {
+    Driver driver1;
     WebDriver driver;
     LoginPage loginPage;
 
