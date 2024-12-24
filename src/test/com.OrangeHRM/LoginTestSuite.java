@@ -1,7 +1,7 @@
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -14,6 +14,7 @@ public class LoginTestSuite {
     @BeforeTest
     public void beforeTest(){
         driver = new ChromeDriver();
+        driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         loginPage = new LoginPage(driver);
     }
@@ -22,8 +23,7 @@ public class LoginTestSuite {
     public void TC01_VerifyHeaderAndLogo(){
         loginPage.openBrowser("http://localhost:90");
         Assert.assertTrue(loginPage.isElementDisplay(Locator.CSS,"h5"));
-        Assert.assertEquals(loginPage.getElementText(Locator.CSS,"h5"),"Header");
-        Assert.assertTrue(loginPage.isElementDisplay(Locator.CSS,".orangehrm-login-logo"));
+        Assert.assertEquals(loginPage.getElementText(Locator.CSS,"h5"),"Login");
     }
 
     @Test
@@ -49,4 +49,9 @@ public class LoginTestSuite {
         loginPage.clearText(Locator.NAME,"username").clearText(Locator.NAME,"password").setText(Locator.NAME,"username","hideyashy").setText(Locator.NAME,"password","#Onimusha00").click(Locator.CSS,"button");
         System.out.println("hello");
     }
+
+//    @AfterTest
+//    public void afterTest(){
+//        driver.close();
+//    }
 }

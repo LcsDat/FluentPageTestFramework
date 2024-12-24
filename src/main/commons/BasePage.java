@@ -1,8 +1,6 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
-
-import java.util.Locale;
 
 public class BasePage implements PageActions{
 
@@ -13,7 +11,8 @@ public class BasePage implements PageActions{
     }
 
     private By getByLocator(Locator strategy, String locator){
-            By by = null;
+        By by = null;
+
 //        if (strategy.equals(Locator.XPATH)) return By.xpath(locator);
 //        if (strategy.equals(Locator.CSS)) return By.cssSelector(locator);
 //        if (strategy.equals(Locator.ID)) return By.id(locator);
@@ -65,10 +64,13 @@ public class BasePage implements PageActions{
     }
 
     public boolean isElementDisplay(Locator strategy, String locator){
-
-        boolean isDisplaye = false;
-        if(driver.findElement(getByLocator(strategy, locator)).isDisplayed()) isDisplaye = true;
-        return isDisplaye;
+        boolean isDisplayed;
+        try {
+            isDisplayed = driver.findElement(getByLocator(strategy, locator)).isDisplayed();
+        } catch (NoSuchElementException e) {
+            isDisplayed = false;
+        }
+        return isDisplayed;
     }
 
     public String getElementText(Locator strategy, String locator){
