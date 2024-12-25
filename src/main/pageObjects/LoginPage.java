@@ -38,25 +38,25 @@ public class LoginPage extends Page {
         return driver.findElement(Locator.CSS, ORANGE_LOGO_TITLE).getText();
     }
 
-    public boolean isUsernameErrorMessageDisplayed() {
-        boolean isDisplayed;
-        try {
-            isDisplayed = driver.findElement(Locator.XPATH, USERNAME_ERROR_MESSAGE).isDisplayed();
-        } catch (NoSuchElementException e) {
-            isDisplayed = false;
-        }
-        return isDisplayed;
-    }
+//    public boolean isUsernameErrorMessageDisplayed() {
+//        boolean isDisplayed;
+//        try {
+//            isDisplayed = driver.findElement(Locator.XPATH, USERNAME_ERROR_MESSAGE).isDisplayed();
+//        } catch (NoSuchElementException e) {
+//            isDisplayed = false;
+//        }
+//        return isDisplayed;
+//    }
 
-    public boolean isPasswordErrorMessageDisplayed() {
-        boolean isDisplayed;
-        try {
-            isDisplayed = driver.findElement(Locator.XPATH, PASSWORD_ERROR_MESSAGE).isDisplayed();
-        } catch (NoSuchElementException e) {
-            isDisplayed = false;
-        }
-        return isDisplayed;
-    }
+//    public boolean isPasswordErrorMessageDisplayed() {
+//        boolean isDisplayed;
+//        try {
+//            isDisplayed = driver.findElement(Locator.XPATH, PASSWORD_ERROR_MESSAGE).isDisplayed();
+//        } catch (NoSuchElementException e) {
+//            isDisplayed = false;
+//        }
+//        return isDisplayed;
+//    }
 
     public String getUsernameErrorMessage() {
         return driver.findElement(Locator.XPATH, USERNAME_ERROR_MESSAGE).getText();
@@ -67,37 +67,38 @@ public class LoginPage extends Page {
     }
 
     public LoginPage verifyLogoDisplayed() {
-        assertTrue(driver.findElement(Locator.CSS, ORANGE_LOGO).isDisplayed());
+        verifyTrue(driver.findElement(Locator.CSS, ORANGE_LOGO).isDisplayed());
         return this;
     }
 
     public LoginPage verifyLogoTitle() {
-        assertEquals(getLogoTitle(), "Login");
+        verifyEqual(getLogoTitle(), "Login");
         return this;
     }
 
     public LoginPage verifyUsernameErrorMessageInfo() {
-        assertEquals(getUsernameErrorMessage(), "Required");
+        verifyEqual(getUsernameErrorMessage(), "Required");
         return this;
     }
 
     public LoginPage verifyPasswordErrorMessageInfo() {
-        assertEquals(getPasswordErrorMessage(), "Required");
+        verifyEqual(getPasswordErrorMessage(), "Required");
         return this;
     }
 
     public LoginPage verifyUsernameErrorMessUndisplayed() {
-        assertFalse(isUsernameErrorMessageDisplayed());
+        verifyUndisplayed(Locator.XPATH, USERNAME_ERROR_MESSAGE, GlobalConstant.SHORT_DURATION);
         return this;
     }
 
     public LoginPage verifyPasswordErrorMessUndisplayed() {
-        assertFalse(isPasswordErrorMessageDisplayed());
+        verifyUndisplayed(Locator.XPATH, PASSWORD_ERROR_MESSAGE, GlobalConstant.SHORT_DURATION);
+        System.out.println("pass undisplayed");
         return this;
     }
 
     public LoginPage verifyLoginErrorDisplayed(){
-        assertTrue(driver.findElement(Locator.CSS, LOGIN_ERROR).isDisplayed());
+        verifyTrue(driver.findElement(Locator.CSS, LOGIN_ERROR).isDisplayed());
         return this;
     }
 }

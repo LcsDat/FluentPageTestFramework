@@ -76,7 +76,19 @@ public class Driver implements FindElementAction, Navigation, Options, Control {
             case EDGE -> webDriver = new EdgeDriver();
         }
         maximizeWindow();
-        setImplicitTimeout(GlobalConstant.DURATION);
+        setImplicitTimeout(GlobalConstant.LONG_DURATION);
+    }
+
+    public void startBrowser(String browserName) {
+        Browser browser = Browser.valueOf(browserName.toUpperCase());
+
+        switch (browser) {
+            case CHROME -> webDriver = new ChromeDriver();
+            case FIREFOX -> webDriver = new FirefoxDriver();
+            case EDGE -> webDriver = new EdgeDriver();
+        }
+        maximizeWindow();
+        setImplicitTimeout(GlobalConstant.LONG_DURATION);
     }
 
     @Override

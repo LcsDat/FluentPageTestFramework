@@ -35,12 +35,7 @@ public class CoreWebElement implements ElementAction, Wait {
 
     @Override
     public boolean isDisplayed() {
-        boolean isDisplayed;
-        try {
-            isDisplayed = webElement.isDisplayed();
-        } catch (NoSuchElementException ignored) {
-            isDisplayed = false;
-        }
-        return isDisplayed;
+        return webElement.isDisplayed();
     }
+
 }

@@ -1,31 +1,31 @@
-import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
 
-public class LoginTestSuite {
+public class LoginPageTestSuite {
     Driver driver;
     LoginPage loginPage;
 
+    @Parameters({"browser","url"})
     @BeforeTest
-    public void beforeTest(){
+    public void beforeTest(String browser, String URL) {
         driver = Driver.getInstance();
-        driver.startBrowser(Browser.CHROME);
-        loginPage = PageFactory.getInstance().getLoginPage(driver);
+        driver.startBrowser(browser);
+        driver.goToUrl(URL);
     }
 
     @Test
     public void TC01_VerifyHeaderAndLogo() {
-        driver.goToUrl("http://localhost:90");
+        loginPage = PageFactory.getInstance().getLoginPage(driver);
 
         loginPage.verifyLogoDisplayed()
                 .verifyLogoTitle();
     }
 
     @Test
-    public void TC02_LoginWhenMissingCredentials(){
+    public void TC02_LoginWhenMissingCredentials() {
         loginPage.clickLogin()
                 .verifyUsernameErrorMessageInfo()
                 .verifyPasswordErrorMessageInfo()
@@ -36,17 +36,17 @@ public class LoginTestSuite {
     }
 
     @Test
-    public void TC03_LoginWithInvalidCredentials(){
+    public void TC03_LoginWithInvalidCredentials() {
         loginPage.clickLogin().verifyLoginErrorDisplayed();
     }
 
     @Test
-    public void TC04_LoginWithValidCredentials(){
+    public void TC04_LoginWithValidCredentials() {
         loginPage.setTextUsername("hideyashy").setTextPassword("#Onimusha00").clickLogin();
     }
 
     @AfterTest
-    public void afterTest(){
+    public void afterTest() {
         driver.close();
     }
 }
