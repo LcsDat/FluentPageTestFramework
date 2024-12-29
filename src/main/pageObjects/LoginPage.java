@@ -1,6 +1,4 @@
-import org.openqa.selenium.NoSuchElementException;
-
-public class LoginPage extends Page {
+public class LoginPage extends BasePage {
     private final String USERNAME_INPUT = "username";
     private final String PASSWORD_INPUT = "password";
     private final String LOGIN_BUTTON = "[type*='submit']";
@@ -11,8 +9,9 @@ public class LoginPage extends Page {
     private final String LOGIN_ERROR = "div[role='alert']";
 
 
-    public LoginPage(Driver driver) {
-        super(driver);
+    public LoginPage(Driver driver, CoreVerification coreVerification) {
+
+        super(driver, coreVerification);
     }
 
     public LoginPage setTextUsername(String value) {
@@ -67,38 +66,37 @@ public class LoginPage extends Page {
     }
 
     public LoginPage verifyLogoDisplayed() {
-        verifyTrue(driver.findElement(Locator.CSS, ORANGE_LOGO).isDisplayed());
+        coreVerification.verifyTrue(driver.findElement(Locator.CSS, ORANGE_LOGO).isDisplayed());
         return this;
     }
 
     public LoginPage verifyLogoTitle() {
-        verifyEqual(getLogoTitle(), "Login");
+        coreVerification.verifyEqual(getLogoTitle(), "Login");
         return this;
     }
 
     public LoginPage verifyUsernameErrorMessageInfo() {
-        verifyEqual(getUsernameErrorMessage(), "Required");
+        coreVerification.verifyEqual(getUsernameErrorMessage(), "Required");
         return this;
     }
 
     public LoginPage verifyPasswordErrorMessageInfo() {
-        verifyEqual(getPasswordErrorMessage(), "Required");
+        coreVerification.verifyEqual(getPasswordErrorMessage(), "Required");
         return this;
     }
 
     public LoginPage verifyUsernameErrorMessUndisplayed() {
-        verifyUndisplayed(Locator.XPATH, USERNAME_ERROR_MESSAGE, GlobalConstant.SHORT_DURATION);
+        coreVerification.verifyUndisplayed(driver, Locator.XPATH, USERNAME_ERROR_MESSAGE, GlobalConstant.SHORT_DURATION);
         return this;
     }
 
     public LoginPage verifyPasswordErrorMessUndisplayed() {
-        verifyUndisplayed(Locator.XPATH, PASSWORD_ERROR_MESSAGE, GlobalConstant.SHORT_DURATION);
-        System.out.println("pass undisplayed");
+        coreVerification.verifyUndisplayed(driver, Locator.XPATH, PASSWORD_ERROR_MESSAGE, GlobalConstant.SHORT_DURATION);
         return this;
     }
 
-    public LoginPage verifyLoginErrorDisplayed(){
-        verifyTrue(driver.findElement(Locator.CSS, LOGIN_ERROR).isDisplayed());
+    public LoginPage verifyLoginErrorDisplayed() {
+        coreVerification.verifyTrue(driver.findElement(Locator.CSS, LOGIN_ERROR).isDisplayed());
         return this;
     }
 }

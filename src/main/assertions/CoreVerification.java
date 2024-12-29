@@ -3,12 +3,7 @@ import org.testng.Assert;
 
 import java.time.Duration;
 
-public class Page implements Verification {
-    protected Driver driver;
-
-    public Page(Driver driver) {
-        this.driver = driver;
-    }
+public class CoreVerification implements Verification {
 
     @Override
     public void verifyTrue(boolean condition) {
@@ -32,7 +27,7 @@ public class Page implements Verification {
      * @param locatorValue The locator value
      * @param implicitTimeout set the implicit timeout
      */
-    public void verifyUndisplayed(Locator locator, String locatorValue, Duration implicitTimeout) {
+    public void verifyUndisplayed(Driver driver, Locator locator, String locatorValue, Duration implicitTimeout) {
         boolean isDisplayed;
 
         try {

@@ -13,7 +13,10 @@ public class Driver implements FindElementAction, Navigation, Options, Control {
     private WebDriver webDriver;
     private static Driver driver;
 
-    public static Driver getInstance() {
+    private Driver() {
+    }
+
+    public static synchronized Driver getInstance() {
         if (driver == null) driver = new Driver();
         return driver;
     }
@@ -70,6 +73,7 @@ public class Driver implements FindElementAction, Navigation, Options, Control {
 
     @Override
     public void startBrowser(Browser browser) {
+        WebDriver driver;
         switch (browser) {
             case CHROME -> webDriver = new ChromeDriver();
             case FIREFOX -> webDriver = new FirefoxDriver();

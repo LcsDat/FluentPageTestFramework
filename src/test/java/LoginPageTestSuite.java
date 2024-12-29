@@ -1,25 +1,28 @@
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 
-public class LoginPageTestSuite {
-    Driver driver;
+public class LoginPageTestSuite extends BaseTest {
+    //    Driver driver;
     LoginPage loginPage;
+//    Page loginPage;
 
-    @Parameters({"browser","url"})
-    @BeforeTest
-    public void beforeTest(String browser, String URL) {
-        driver = Driver.getInstance();
-        driver.startBrowser(browser);
-        driver.goToUrl(URL);
+    @BeforeClass
+    public void beforeClass() {
+//        loginPage = pageFactory.getLoginPage(driver);
+        loginPage = PageFactory.getInstance().getLoginPage(driver, new CoreVerification());
     }
+//    @Parameters({"browser","url"})
+//    @BeforeSuite
+//    public void beforeTest(String browser, String URL) {
+//        driver = Driver.getInstance();
+//        driver.startBrowser(browser);
+//        driver.goToUrl(URL);
+//    }
 
     @Test
     public void TC01_VerifyHeaderAndLogo() {
-        loginPage = PageFactory.getInstance().getLoginPage(driver);
-
+//        loginPage = pageFactory.getLoginPage(driver);
+        System.out.println("first tc in Login Suite:" + driver);
         loginPage.verifyLogoDisplayed()
                 .verifyLogoTitle();
     }
@@ -43,10 +46,12 @@ public class LoginPageTestSuite {
     @Test
     public void TC04_LoginWithValidCredentials() {
         loginPage.setTextUsername("hideyashy").setTextPassword("#Onimusha00").clickLogin();
+        System.out.println("last case in Login Suite" +driver);
+
     }
 
-    @AfterTest
-    public void afterTest() {
-        driver.close();
-    }
+//    @AfterSuite
+//    public void afterTest() {
+//        driver.close();
+//    }
 }
