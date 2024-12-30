@@ -15,12 +15,13 @@ public class AdminRoleTestSuite extends BaseTest {
         homePage.getNavigationSection().selectPage("PIM");
         pimPage = PageFactory.getInstance().getPimPage(Driver.getInstance());
         pimPage.clickToAddButton()
+                .waitForLoadingSpinnerInvisible()
                 .setTextToNameFields("firstName", "Uyen")
                 .setTextToNameFields("middleName", "Tu")
-                .setTextToNameFields("lastName","Ta")
+                .setTextToNameFields("lastName", "Ta")
                 .clickCreateLoginDetails(true)
-                .setTextToOtherFields("Username","phoebe1")
-                .setTextToOtherFields("Password","#Onimusha00")
+                .setTextToOtherFields("Username", "phoebe1")
+                .setTextToOtherFields("Password", "#Onimusha00")
                 .setTextToOtherFields("Confirm Password", "#Onimusha00");
     }
 

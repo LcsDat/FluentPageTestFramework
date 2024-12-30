@@ -11,7 +11,6 @@ public class LoginPageTestSuite extends BaseTest {
 
     @Test
     public void TC01_VerifyHeaderAndLogo() {
-        System.out.println("first tc in Login Suite:" + driver);
         loginPage.verifyLogoDisplayed()
                 .verifyLogoTitle();
     }
@@ -35,7 +34,5 @@ public class LoginPageTestSuite extends BaseTest {
     @Test
     public void TC04_LoginWithValidCredentials() {
         loginPage.setTextUsername("hideyashy").setTextPassword("#Onimusha00").clickLogin();
-        System.out.println("last case in Login Suite" +driver);
-
     }
 }

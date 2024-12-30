@@ -29,9 +29,15 @@ public class CoreWebElement implements ElementAction, Wait {
         webElement.sendKeys(text);
     }
 
+    /**
+     * Get the attribute value of the element, which is properties tab of Dev tool.
+     * Some will return null.
+     * @param attributeValue the property name
+     * @return
+     */
     @Override
     public String getAttribute(String attributeValue) {
-        return webElement.getDomAttribute(attributeValue);
+        return webElement.getAttribute(attributeValue);
     }
 
     @Override
@@ -57,5 +63,10 @@ public class CoreWebElement implements ElementAction, Wait {
     @Override
     public void waitToBePresented() {
         new WebDriverWait(webDriver, GlobalConstant.LONG_DURATION).until(ExpectedConditions.presenceOfElementLocated(by));
+    }
+
+    @Override
+    public void waitToBeInvisible() {
+        new WebDriverWait(webDriver, GlobalConstant.LONG_DURATION).until(ExpectedConditions.invisibilityOfElementLocated(by));
     }
 }

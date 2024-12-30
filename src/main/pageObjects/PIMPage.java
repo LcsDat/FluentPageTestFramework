@@ -15,11 +15,15 @@ public class PIMPage extends WebPage {
     }
 
     private CoreWebElement otherFields(String nameField) {
-        return driver.findElementByXpath(nameField);
+        return driver.findElementByXpath("//label[text()='" + nameField + "']/parent::div/following-sibling::div/input");
     }
 
-    private CoreWebElement createLoginDetailsCheckbox(){
+    private CoreWebElement createLoginDetailsCheckbox() {
         return driver.findElementByCss("input[type='checkbox']");
+    }
+
+    private CoreWebElement createLoginDetailsButton() {
+        return driver.findElementByCss("span.oxd-switch-input.oxd-switch-input--active");
     }
 
     public PIMPage clickToAddButton() {
@@ -37,15 +41,26 @@ public class PIMPage extends WebPage {
         return this;
     }
 
+    public PIMPage waitForLoadingSpinnerInvisible() {
+        loadingSpinner().waitToBeInvisible();
+        return this;
+    }
+
     /**
      * Click to the Create Login Details button
-     * @param status Set checkbox status.
+     *
+     * @param status Set true to enable button and vice versa
      */
-    public PIMPage clickCreateLoginDetails(Boolean status){
-        var checkboxStatus = createLoginDetailsCheckbox().getCssProperty("checked");
-        if(!status.toString().equals(checkboxStatus)){
-            createLoginDetailsCheckbox().click();
-        } else System.out.println("Already enable or disabled");
+    public PIMPage clickCreateLoginDetails(Boolean status) {
+        var checkboxStatus = createLoginDetailsCheckbox().getAttribute("_modelValue");
+        if (status && checkboxStatus.equals("false")) {
+            createLoginDetailsButton().click();
+            System.out.println("Enable Create Login Details");
+        }
+        if (!status && checkboxStatus.equals("true")) {
+            createLoginDetailsButton().click();
+            System.out.println("Disable Create Login Details");
+        }
 
         return this;
     }

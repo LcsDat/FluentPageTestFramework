@@ -14,7 +14,6 @@ public class HomePageTestSuite extends BaseTest{
     @Test
     public void TC01_Ad() throws InterruptedException {
 
-        System.out.println("after init home page: " +driver);
         homePage.verifyDashboardDisplayed().clickAdminMenuOption();
         Thread.sleep(2000);
     }
