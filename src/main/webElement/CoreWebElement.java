@@ -1,31 +1,42 @@
-import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.Assert;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CoreWebElement implements ElementAction, Wait {
     private WebElement webElement;
-    private WebDriver driver;
+    private WebDriver webDriver;
+    private By by;
 
-    public CoreWebElement(WebDriver webDriver, WebElement webElement, Locator locator, String locatorValue) {
+    public CoreWebElement(WebDriver webDriver,WebElement webElement, By by) {
+        this.webDriver = webDriver;
         this.webElement = webElement;
-        this.driver = webDriver;
+        this.by = by;
     }
 
     @Override
     public void click() {
+        waitToClick();
         webElement.click();
     }
 
     @Override
     public void setText(String text) {
         webElement.clear();
+//        if(!webElement.getCssValue("value").isEmpty()) webElement.sendKeys(Keys.BACK_SPACE);
         webElement.sendKeys(text);
     }
 
     @Override
     public String getAttribute(String attributeValue) {
         return webElement.getDomAttribute(attributeValue);
+    }
+
+    @Override
+    public String getCssProperty(String cssValue) {
+        return webElement.getCssValue(cssValue);
     }
 
     @Override
@@ -38,4 +49,13 @@ public class CoreWebElement implements ElementAction, Wait {
         return webElement.isDisplayed();
     }
 
+    @Override
+    public void waitToClick() {
+        new WebDriverWait(webDriver, GlobalConstant.LONG_DURATION).until(ExpectedConditions.elementToBeClickable(by));
+    }
+
+    @Override
+    public void waitToBePresented() {
+        new WebDriverWait(webDriver, GlobalConstant.LONG_DURATION).until(ExpectedConditions.presenceOfElementLocated(by));
+    }
 }

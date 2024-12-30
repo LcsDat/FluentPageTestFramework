@@ -1,4 +1,4 @@
-public class LoginPage extends BasePage {
+public class LoginPage extends WebPage {
     private final String USERNAME_INPUT = "username";
     private final String PASSWORD_INPUT = "password";
     private final String LOGIN_BUTTON = "[type*='submit']";
@@ -8,95 +8,110 @@ public class LoginPage extends BasePage {
     private final String PASSWORD_ERROR_MESSAGE = "//label[text()='Password']/ancestor::div[contains(@class,'input') and contains(@class,'bottom')]/child::span";
     private final String LOGIN_ERROR = "div[role='alert']";
 
+    private CoreWebElement usernameInput() {
+        return driver.findElementByName("username");
+    }
 
-    public LoginPage(Driver driver, CoreVerification coreVerification) {
+    private CoreWebElement passwordInput() {
+        return driver.findElementByName("password");
+    }
 
-        super(driver, coreVerification);
+    private CoreWebElement loginButton() {
+        return driver.findElementByCss("[type*='submit']");
+    }
+
+    private CoreWebElement orangeHRMLogo() {
+        return driver.findElementByCss(".orangehrm-login-logo");
+    }
+
+    private CoreWebElement orangeHRMLogoTitle() {
+        return driver.findElementByCss("h5");
+    }
+
+    private CoreWebElement usernameErrorMessage() {
+        return driver.findElementByXpath("//label[text()='Username']/ancestor::div[contains(@class,'input') and contains(@class,'bottom')]/child::span");
+    }
+
+    private CoreWebElement passwordErrorMessage() {
+        return driver.findElementByXpath("//label[text()='Password']/ancestor::div[contains(@class,'input') and contains(@class,'bottom')]/child::span");
+    }
+
+    private CoreWebElement loginError() {
+        return driver.findElementByCss("div[role='alert']");
+    }
+
+    public LoginPage(Driver driver) {
+
+        super(driver);
     }
 
     public LoginPage setTextUsername(String value) {
-        driver.findElement(Locator.NAME, USERNAME_INPUT).setText(value);
+        usernameInput().setText(value);
         return this;
     }
 
     public LoginPage setTextPassword(String value) {
-        driver.findElement(Locator.NAME, PASSWORD_INPUT).setText(value);
+        passwordInput().setText(value);
         return this;
     }
 
     public LoginPage clickLogin() {
-        driver.findElement(Locator.CSS, LOGIN_BUTTON).click();
+        loginButton().click();
         return this;
     }
 
     public boolean isLogoDisplayed() {
-        return driver.findElement(Locator.CSS, ORANGE_LOGO).isDisplayed();
+        return orangeHRMLogo().isDisplayed();
+    }
+
+    public boolean isLoginErrorDisplayed() {
+        return loginError().isDisplayed();
     }
 
     public String getLogoTitle() {
-        return driver.findElement(Locator.CSS, ORANGE_LOGO_TITLE).getText();
+        return orangeHRMLogoTitle().getText();
     }
 
-//    public boolean isUsernameErrorMessageDisplayed() {
-//        boolean isDisplayed;
-//        try {
-//            isDisplayed = driver.findElement(Locator.XPATH, USERNAME_ERROR_MESSAGE).isDisplayed();
-//        } catch (NoSuchElementException e) {
-//            isDisplayed = false;
-//        }
-//        return isDisplayed;
-//    }
-
-//    public boolean isPasswordErrorMessageDisplayed() {
-//        boolean isDisplayed;
-//        try {
-//            isDisplayed = driver.findElement(Locator.XPATH, PASSWORD_ERROR_MESSAGE).isDisplayed();
-//        } catch (NoSuchElementException e) {
-//            isDisplayed = false;
-//        }
-//        return isDisplayed;
-//    }
-
     public String getUsernameErrorMessage() {
-        return driver.findElement(Locator.XPATH, USERNAME_ERROR_MESSAGE).getText();
+        return usernameErrorMessage().getText();
     }
 
     public String getPasswordErrorMessage() {
-        return driver.findElement(Locator.XPATH, PASSWORD_ERROR_MESSAGE).getText();
+        return passwordErrorMessage().getText();
     }
 
     public LoginPage verifyLogoDisplayed() {
-        coreVerification.verifyTrue(driver.findElement(Locator.CSS, ORANGE_LOGO).isDisplayed());
+        driver.verifyTrue(isLogoDisplayed());
         return this;
     }
 
     public LoginPage verifyLogoTitle() {
-        coreVerification.verifyEqual(getLogoTitle(), "Login");
+        driver.verifyEqual(getLogoTitle(), "Login");
         return this;
     }
 
     public LoginPage verifyUsernameErrorMessageInfo() {
-        coreVerification.verifyEqual(getUsernameErrorMessage(), "Required");
+        driver.verifyEqual(getUsernameErrorMessage(), "Required");
         return this;
     }
 
     public LoginPage verifyPasswordErrorMessageInfo() {
-        coreVerification.verifyEqual(getPasswordErrorMessage(), "Required");
+        driver.verifyEqual(getPasswordErrorMessage(), "Required");
         return this;
     }
 
     public LoginPage verifyUsernameErrorMessUndisplayed() {
-        coreVerification.verifyUndisplayed(driver, Locator.XPATH, USERNAME_ERROR_MESSAGE, GlobalConstant.SHORT_DURATION);
+        driver.verifyUndisplayed(Locator.XPATH, USERNAME_ERROR_MESSAGE, GlobalConstant.SHORT_DURATION);
         return this;
     }
 
     public LoginPage verifyPasswordErrorMessUndisplayed() {
-        coreVerification.verifyUndisplayed(driver, Locator.XPATH, PASSWORD_ERROR_MESSAGE, GlobalConstant.SHORT_DURATION);
+        driver.verifyUndisplayed(Locator.XPATH, PASSWORD_ERROR_MESSAGE, GlobalConstant.SHORT_DURATION);
         return this;
     }
 
     public LoginPage verifyLoginErrorDisplayed() {
-        coreVerification.verifyTrue(driver.findElement(Locator.CSS, LOGIN_ERROR).isDisplayed());
+        driver.verifyTrue(isLoginErrorDisplayed());
         return this;
     }
 }

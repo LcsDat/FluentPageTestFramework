@@ -13,11 +13,15 @@ public class PageFactory {
         return pageFactory;
     }
 
-    public LoginPage getLoginPage(Driver driver, CoreVerification coreVerification) {
-        return new LoginPage(driver, coreVerification);
+    public LoginPage getLoginPage(Driver driver) {
+        return new LoginPage(driver);
     }
 
-    public HomePage getHomePage(Driver driver, CoreVerification coreVerification) {
-        return new HomePage(driver, coreVerification);
+    public HomePage getHomePage(Driver driver) {
+        return new HomePage(driver);
+    }
+
+    public PIMPage getPimPage(Driver driver){
+        return new PIMPage(driver);
     }
 }

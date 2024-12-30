@@ -9,7 +9,7 @@
     <test name="Suite1">
         <classes>
             <class name="LoginPageTestSuite"/>
-            <class name="HomePageTestSuite"/>
+            <class name="AdminRoleTestSuite"/>
         </classes>
     </test>
 </suite>

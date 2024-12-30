@@ -4,13 +4,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.Assert;
 
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Driver implements FindElementAction, Navigation, Options, Control {
+public class Driver implements FindElementAction, Navigation, Options, Control, Verification {
     private WebDriver webDriver;
+
     private static Driver driver;
 
     private Driver() {
@@ -20,6 +22,7 @@ public class Driver implements FindElementAction, Navigation, Options, Control {
         if (driver == null) driver = new Driver();
         return driver;
     }
+
 
     public By getBy(Locator locatorStrategy, String locatorValue) {
         By by;
@@ -42,7 +45,42 @@ public class Driver implements FindElementAction, Navigation, Options, Control {
     public CoreWebElement findElement(Locator locatorStrategy, String locatorValue) {
         var nativeElement = webDriver.findElement(getBy(locatorStrategy, locatorValue));
 
-        return new CoreWebElement(webDriver, nativeElement, locatorStrategy, locatorValue);
+        return new CoreWebElement(webDriver, nativeElement, getBy(locatorStrategy, locatorValue));
+    }
+
+    public CoreWebElement findElementById(String locatorValue) {
+        var idStrategy = ElementFindingStrategy.getById(locatorValue);
+        var nativeElement = webDriver.findElement(idStrategy);
+
+        return new CoreWebElement(webDriver, nativeElement, idStrategy);
+    }
+
+    public CoreWebElement findElementByName(String locatorValue) {
+        var nameStrategy = ElementFindingStrategy.getByName(locatorValue);
+        var nativeElement = webDriver.findElement(nameStrategy);
+
+        return new CoreWebElement(webDriver, nativeElement, nameStrategy);
+    }
+
+    public CoreWebElement findElementByClassname(String locatorValue) {
+        var classNameStrategy = ElementFindingStrategy.getByClassname(locatorValue);
+        var nativeElement = webDriver.findElement(classNameStrategy);
+
+        return new CoreWebElement(webDriver, nativeElement, classNameStrategy);
+    }
+
+    public CoreWebElement findElementByXpath(String locatorValue) {
+        var xpathStrategy = ElementFindingStrategy.getByXpath(locatorValue);
+        var nativeElement = webDriver.findElement(xpathStrategy);
+
+        return new CoreWebElement(webDriver, nativeElement, xpathStrategy);
+    }
+
+    public CoreWebElement findElementByCss(String locatorValue) {
+        var cssStrategy = ElementFindingStrategy.getByCss(locatorValue);
+        var nativeElement = webDriver.findElement(cssStrategy);
+
+        return new CoreWebElement(webDriver, nativeElement, cssStrategy);
     }
 
     @Override
@@ -50,7 +88,57 @@ public class Driver implements FindElementAction, Navigation, Options, Control {
         var nativeElements = webDriver.findElements(getBy(locatorStrategy, locatorValue));
         var listCoreElements = new ArrayList<CoreWebElement>();
         for (var nativeElement : nativeElements) {
-            listCoreElements.add(new CoreWebElement(webDriver, nativeElement, locatorStrategy, locatorValue));
+            listCoreElements.add(new CoreWebElement(webDriver, nativeElement, getBy(locatorStrategy, locatorValue)));
+        }
+        return listCoreElements;
+    }
+
+    public List<CoreWebElement> findElementsById(String locatorValue) {
+        var idStrategy = ElementFindingStrategy.getById(locatorValue);
+        var byIdElements = webDriver.findElements(idStrategy);
+        var listCoreElements = new ArrayList<CoreWebElement>();
+        for (var nativeElement : byIdElements) {
+            listCoreElements.add(new CoreWebElement(webDriver, nativeElement, idStrategy));
+        }
+        return listCoreElements;
+    }
+
+    public List<CoreWebElement> findElementsByName(String locatorValue) {
+        var nameStrategy = ElementFindingStrategy.getByName(locatorValue);
+        var nativeElements = webDriver.findElements(nameStrategy);
+        var listCoreElements = new ArrayList<CoreWebElement>();
+        for (var nativeElement : nativeElements) {
+            listCoreElements.add(new CoreWebElement(webDriver, nativeElement, nameStrategy));
+        }
+        return listCoreElements;
+    }
+
+    public List<CoreWebElement> findElementsByClassname(String locatorValue) {
+        var classnameStrategy = ElementFindingStrategy.getByClassname(locatorValue);
+        var nativeElements = webDriver.findElements(classnameStrategy);
+        var listCoreElements = new ArrayList<CoreWebElement>();
+        for (var nativeElement : nativeElements) {
+            listCoreElements.add(new CoreWebElement(webDriver, nativeElement, classnameStrategy));
+        }
+        return listCoreElements;
+    }
+
+    public List<CoreWebElement> findElementsByXpath(String locatorValue) {
+        var xpathStrategy = ElementFindingStrategy.getByXpath(locatorValue);
+        var nativeElements = webDriver.findElements(xpathStrategy);
+        var listCoreElements = new ArrayList<CoreWebElement>();
+        for (var nativeElement : nativeElements) {
+            listCoreElements.add(new CoreWebElement(webDriver, nativeElement, xpathStrategy));
+        }
+        return listCoreElements;
+    }
+
+    public List<CoreWebElement> findElementsByCss(String locatorValue) {
+        var cssStrategy = ElementFindingStrategy.getByCss(locatorValue);
+        var nativeElements = webDriver.findElements(cssStrategy);
+        var listCoreElements = new ArrayList<CoreWebElement>();
+        for (var nativeElement : nativeElements) {
+            listCoreElements.add(new CoreWebElement(webDriver, nativeElement, cssStrategy));
         }
         return listCoreElements;
     }
@@ -98,5 +186,41 @@ public class Driver implements FindElementAction, Navigation, Options, Control {
     @Override
     public void close() {
         webDriver.close();
+    }
+
+    @Override
+    public void verifyTrue(boolean condition) {
+        Assert.assertTrue(condition);
+    }
+
+    @Override
+    public void verifyFalse(boolean condition) {
+        Assert.assertFalse(condition);
+    }
+
+    @Override
+    public <expectedT> void verifyEqual(expectedT expected, expectedT actual) {
+        Assert.assertEquals(expected, actual);
+    }
+
+    /**
+     * To verify an element undisplayed. This method will re-configure the implicit wait timeout
+     * which will reduce the time returning condition, also testing run time.
+     * @param locatorStrategy The strategy to locate the locator
+     * @param locatorValue The locator value
+     * @param implicitTimeout set the implicit timeout
+     */
+    public void verifyUndisplayed(Locator locatorStrategy, String locatorValue, Duration implicitTimeout) {
+        boolean isDisplayed;
+
+        try {
+            webDriver.manage().timeouts().implicitlyWait(implicitTimeout);
+            isDisplayed = webDriver.findElement(getBy(locatorStrategy,locatorValue)).isDisplayed();
+        } catch (NoSuchElementException e){
+            isDisplayed = false;
+        }
+
+        webDriver.manage().timeouts().implicitlyWait(GlobalConstant.LONG_DURATION);
+        Assert.assertFalse(isDisplayed);
     }
 }

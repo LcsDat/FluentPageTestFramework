@@ -1,21 +1,35 @@
-public class HomePage extends BasePage{
+public class HomePage extends WebPage {
 
     private static final String DASHBOARD_HEADER = "//h6";
     private static final String ADMIN_MENU_OPTION = "//span[text()='Admin']";
 
-    public HomePage(Driver driver, CoreVerification coreVerification) {
+    private CoreWebElement dashboardHeader() {
+        return driver.findElementByXpath("//h6");
+    }
 
-        super(driver,coreVerification);
+    private CoreWebElement adminMenuOption() {
+        return driver.findElementByXpath("//span[text()='Admin']");
+    }
+
+    public HomePage(Driver driver) {
+        super(driver);
     }
 
     public HomePage verifyDashboardDisplayed() {
-        coreVerification.verifyTrue(driver.findElement(Locator.XPATH, DASHBOARD_HEADER).isDisplayed());
-        System.out.println("pass dashboard page");
+        driver.verifyTrue(dashboardHeader().isDisplayed());
         return this;
     }
 
     public HomePage clickAdminMenuOption() {
-        driver.findElement(Locator.XPATH, ADMIN_MENU_OPTION).click();
+        adminMenuOption().click();
         return this;
+    }
+
+    public HomePageNavigationSection getNavigationSection() {
+        return new HomePageNavigationSection(driver);
+    }
+
+    public HomePageTopbarBodySection getTopBarSection() {
+        return new HomePageTopbarBodySection(driver);
     }
 }
