@@ -23,11 +23,11 @@ public class BaseTest {
         driver.close();
     }
 
-    protected Faker generateFaker(Locale locale) {
+    protected Faker gentFaker(Locale locale) {
         return new Faker(locale);
     }
 
-    protected Faker generateFaker() {
+    protected Faker getFaker() {
         return new Faker();
     }
 

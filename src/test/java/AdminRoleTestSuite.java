@@ -4,14 +4,24 @@ import org.testng.annotations.Test;
 public class AdminRoleTestSuite extends BaseTest {
     HomePage homePage;
     PIMPage pimPage;
+
     String alphaNumeric = "[[A-Za-z0-9]]";
     String nongAlphaNumeric = "[^A-Za-z0-9]";
+    String validFirstName;
+    String validMiddleName;
+    String validLastName;
+    String validEmployeeID;
 
     @BeforeClass
     public void beforeClass() {
         driver = Driver.getInstance();
         homePage = PageFactory.getInstance().getHomePage(driver);
         pimPage = PageFactory.getInstance().getPimPage(driver);
+
+        validFirstName = getFaker().name().firstName();
+        validMiddleName = getFaker().name().firstName();
+        validLastName = getFaker().name().lastName();
+        validEmployeeID = getFakerValueService().bothify("?????#####");
     }
 
     @Test
@@ -36,9 +46,15 @@ public class AdminRoleTestSuite extends BaseTest {
     }
 
     @Test
-    public void TC02_Create_Account_In_PIM_Page() {
+    public void TC02_Add_Employee_With_Valid_Info_And_Without_Credentials() {
 
-        homePage.getNavigationSection().selectPage("My Info");
+        pimPage.setTextToNameFields("firstName", validFirstName)
+                .setTextToNameFields("middleName", validMiddleName)
+                .setTextToNameFields("lastName", validLastName)
+                .setTextToOtherFields("Employee Id", validEmployeeID)
+                .clickToButton("Save")
+                .waitForLoadingSpinnerInvisible()
+                .selectTopbarItem("EmployeeList");
     }
 
     public void TC03_Create_Account_In_Admin_Page() {
