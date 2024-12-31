@@ -1,5 +1,5 @@
-public class HomePageNavigationSection extends WebPage {
-    public HomePageNavigationSection(Driver driver) {
+public class WebPageNavigationSection extends WebPage {
+    public WebPageNavigationSection(Driver driver) {
         super(driver);
     }
 

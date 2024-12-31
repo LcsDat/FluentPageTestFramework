@@ -7,6 +7,7 @@ public class HomePageTestSuite extends BaseTest{
 
     @BeforeClass
     public void beforeClass(){
+
 //        driver = Driver.getInstance();
         homePage = PageFactory.getInstance().getHomePage(Driver.getInstance());
     }

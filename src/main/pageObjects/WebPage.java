@@ -1,4 +1,4 @@
-public class WebPage<WebT extends WebPage> {
+public abstract class WebPage {
     protected Driver driver;
 
     public WebPage(Driver driver) {
@@ -8,5 +8,14 @@ public class WebPage<WebT extends WebPage> {
     protected CoreWebElement loadingSpinner(){
         return driver.findElementByCss("div.oxd-loading-spinner");
     }
+
+    protected CoreWebElement successfullSaveMessage(){
+        return driver.findElementByCss("p.oxd-text--toast-message");
+    }
+
+    public WebPageNavigationSection getNavigationSection() {
+        return new WebPageNavigationSection(driver);
+    }
+
 
 }

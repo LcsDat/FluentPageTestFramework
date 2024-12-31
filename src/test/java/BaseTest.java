@@ -1,7 +1,11 @@
-import org.openqa.selenium.chrome.ChromeDriver;
+import com.github.javafaker.Faker;
+import com.github.javafaker.service.FakeValuesService;
+import com.github.javafaker.service.RandomService;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
+
+import java.util.Locale;
 
 public class BaseTest {
     protected Driver driver;
@@ -17,5 +21,30 @@ public class BaseTest {
     @AfterSuite
     public void afterSuite() {
         driver.close();
+    }
+
+    protected Faker generateFaker(Locale locale) {
+        return new Faker(locale);
+    }
+
+    protected Faker generateFaker() {
+        return new Faker();
+    }
+
+    protected String getRandomString(String regex) {
+        FakeValuesService fvs = new FakeValuesService(new Locale("en"), new RandomService());
+        return fvs.regexify(regex);
+    }
+    protected FakeValuesService getFakerValueService() {
+        return new FakeValuesService(new Locale("en"), new RandomService());
+    }
+
+    protected void sleepInSecond(long second){
+        try {
+            Thread.sleep(second*1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 }

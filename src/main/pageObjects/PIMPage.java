@@ -1,6 +1,4 @@
-import jdk.jshell.spi.SPIResolutionException;
-
-public class PIMPage extends WebPage {
+public class PIMPage extends WebPageTopbarBodySection {
 
     public PIMPage(Driver driver) {
         super(driver);
@@ -10,12 +8,12 @@ public class PIMPage extends WebPage {
         return driver.findElementByXpath("//button[normalize-space()='Add']");
     }
 
-    private CoreWebElement employeeNameFields(String nameField) {
+    private CoreWebElement employeeNameFieldsInput(String nameField) {
         return driver.findElementByName(nameField);
     }
 
-    private CoreWebElement otherFields(String nameField) {
-        return driver.findElementByXpath("//label[text()='" + nameField + "']/parent::div/following-sibling::div/input");
+    private CoreWebElement otherFieldsInput(String nameField) {
+        return driver.findElementByXpath(String.format("//label[text()='%s']/parent::div/following-sibling::div/input", nameField));
     }
 
     private CoreWebElement createLoginDetailsCheckbox() {
@@ -26,18 +24,51 @@ public class PIMPage extends WebPage {
         return driver.findElementByCss("span.oxd-switch-input.oxd-switch-input--active");
     }
 
+    private CoreWebElement button(String buttonName) {
+        return driver.findElementByXpath(String.format("//button[normalize-space()='%s']", buttonName));
+    }
+
+    private CoreWebElement firstNameErrorMessage() {
+        return driver.findElementByXpath(
+                "//input[@name='firstName']/parent::div/following-sibling::span");
+    }
+
+    private CoreWebElement lastNameErrorMessage() {
+        return driver.findElementByXpath(
+                "//input[@name='lastName']/parent::div/following-sibling::span");
+    }
+
+    private CoreWebElement otherFieldsErrorMessage(String nameField){
+        return driver.findElementByXpath(String.format("//label[text()='%s']/parent::div/following-sibling::span", nameField));
+    }
+
+    public PIMPage verifyFirstNameErrorMessage(String expectedErrorMessage) {
+        driver.verifyEqual(expectedErrorMessage, firstNameErrorMessage().getText());
+        return this;
+    }
+
+    public PIMPage verifyLastNameErrorMessage(String expectedErrorMessage) {
+        driver.verifyEqual(expectedErrorMessage, lastNameErrorMessage().getText());
+        return this;
+    }
+
+    public PIMPage clickToButton(String buttonName) {
+        button(buttonName).click();
+        return this;
+    }
+
     public PIMPage clickToAddButton() {
         addButton().click();
         return this;
     }
 
     public PIMPage setTextToNameFields(String nameFields, String value) {
-        employeeNameFields(nameFields).setText(value);
+        employeeNameFieldsInput(nameFields).setText(value);
         return this;
     }
 
     public PIMPage setTextToOtherFields(String nameField, String value) {
-        otherFields(nameField).setText(value);
+        otherFieldsInput(nameField).setText(value);
         return this;
     }
 
@@ -62,6 +93,16 @@ public class PIMPage extends WebPage {
             System.out.println("Disable Create Login Details");
         }
 
+        return this;
+    }
+
+    public PIMPage selectTopbarItem(String itemName){
+        topbarItemName(itemName).click();
+        return this;
+    }
+
+    public PIMPage verifyOtherFieldsErrorMessage(String nameField, String expectedErrorMessage) {
+        driver.verifyEqual(expectedErrorMessage, otherFieldsErrorMessage(nameField).getText());
         return this;
     }
 }

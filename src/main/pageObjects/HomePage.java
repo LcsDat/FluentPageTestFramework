@@ -25,11 +25,5 @@ public class HomePage extends WebPage {
         return this;
     }
 
-    public HomePageNavigationSection getNavigationSection() {
-        return new HomePageNavigationSection(driver);
-    }
 
-    public HomePageTopbarBodySection getTopBarSection() {
-        return new HomePageTopbarBodySection(driver);
-    }
 }

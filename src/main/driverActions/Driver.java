@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Driver implements FindElementAction, Navigation, Options, Control, Verification {
+    public WebDriver getWebDriver() {
+        return webDriver;
+    }
+
     private WebDriver webDriver;
 
     private static Driver driver;
