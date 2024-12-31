@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class PIMPage extends WebPageTopbarBodySection {
 
     public PIMPage(Driver driver) {
@@ -43,11 +45,13 @@ public class PIMPage extends WebPageTopbarBodySection {
     }
 
     public PIMPage verifyFirstNameErrorMessage(String expectedErrorMessage) {
+        firstNameErrorMessage().waitToBePresented();
         driver.verifyEqual(expectedErrorMessage, firstNameErrorMessage().getText());
         return this;
     }
 
     public PIMPage verifyLastNameErrorMessage(String expectedErrorMessage) {
+        lastNameErrorMessage().waitToBePresented();
         driver.verifyEqual(expectedErrorMessage, lastNameErrorMessage().getText());
         return this;
     }
@@ -103,6 +107,20 @@ public class PIMPage extends WebPageTopbarBodySection {
 
     public PIMPage verifyOtherFieldsErrorMessage(String nameField, String expectedErrorMessage) {
         driver.verifyEqual(expectedErrorMessage, otherFieldsErrorMessage(nameField).getText());
+        return this;
+    }
+
+    private List<CoreWebElement> columnHeader (String headerName){
+        return driver.findElementsByXpath("//div[text()='%s']/preceding::div[@role='columnheader']", headerName);
+    }
+
+    private CoreWebElement elementFindByIdAndHeaderIndex(String id, String headerName){
+        var index = columnHeader(headerName).size() + 1;
+        return driver.findElementByXpath("//div[text()='%s']//ancestor::div[@role='row']//div[@role='cell'][" + index +"]", id);
+    }
+    public PIMPage verifyEmployeeInfoInTableById(String id, String headerName, String expectedValue) {
+//        driver.verifyEqual(expectedValue, elementFindByIdAndHeaderIndex(id, headerName).getText());
+        driver.verifyValueInTable(columnHeader(headerName), "//div[text()='%s']//ancestor::div[@role='row']//div[@role='cell']", expectedValue, id);
         return this;
     }
 }

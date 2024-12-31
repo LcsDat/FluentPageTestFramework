@@ -80,6 +80,13 @@ public class Driver implements FindElementAction, Navigation, Options, Control, 
         return new CoreWebElement(webDriver, nativeElement, xpathStrategy);
     }
 
+    public CoreWebElement findElementByXpath(String locatorValue, String... varargs) {
+        var xpathStrategy = ElementFindingStrategy.getByXpath(String.format(locatorValue,  varargs));
+        var nativeElement = webDriver.findElement(xpathStrategy);
+
+        return new CoreWebElement(webDriver, nativeElement, xpathStrategy);
+    }
+
     public CoreWebElement findElementByCss(String locatorValue) {
         var cssStrategy = ElementFindingStrategy.getByCss(locatorValue);
         var nativeElement = webDriver.findElement(cssStrategy);
@@ -129,6 +136,16 @@ public class Driver implements FindElementAction, Navigation, Options, Control, 
 
     public List<CoreWebElement> findElementsByXpath(String locatorValue) {
         var xpathStrategy = ElementFindingStrategy.getByXpath(locatorValue);
+        var nativeElements = webDriver.findElements(xpathStrategy);
+        var listCoreElements = new ArrayList<CoreWebElement>();
+        for (var nativeElement : nativeElements) {
+            listCoreElements.add(new CoreWebElement(webDriver, nativeElement, xpathStrategy));
+        }
+        return listCoreElements;
+    }
+
+    public List<CoreWebElement> findElementsByXpath(String locatorValue, String... varargs) {
+        var xpathStrategy = ElementFindingStrategy.getByXpath(String.format(locatorValue, varargs));
         var nativeElements = webDriver.findElements(xpathStrategy);
         var listCoreElements = new ArrayList<CoreWebElement>();
         for (var nativeElement : nativeElements) {
@@ -226,5 +243,12 @@ public class Driver implements FindElementAction, Navigation, Options, Control, 
 
         webDriver.manage().timeouts().implicitlyWait(GlobalConstant.LONG_DURATION);
         Assert.assertFalse(isDisplayed);
+    }
+
+    public void verifyValueInTable(List<CoreWebElement> headerElements, String locatorValue, String expectedValue, String... varargs) {
+        var index = headerElements.size();
+        var element = driver.findElementByXpath(locatorValue + "[" + (index +1) + "]", varargs);
+        verifyEqual(expectedValue, element.getText());
+
     }
 }

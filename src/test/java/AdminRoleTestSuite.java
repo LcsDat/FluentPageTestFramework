@@ -54,7 +54,9 @@ public class AdminRoleTestSuite extends BaseTest {
                 .setTextToOtherFields("Employee Id", validEmployeeID)
                 .clickToButton("Save")
                 .waitForLoadingSpinnerInvisible()
-                .selectTopbarItem("EmployeeList");
+                .selectTopbarItem("Employee List")
+                .verifyEmployeeInfoInTableById("3859","First (& Middle) Name", "Dat77206")
+                .verifyEmployeeInfoInTableById("3859","Last Name", "Le87504");
     }
 
     public void TC03_Create_Account_In_Admin_Page() {

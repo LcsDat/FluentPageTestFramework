@@ -25,7 +25,10 @@ public class CoreWebElement implements ElementAction, Wait {
     @Override
     public void setText(String text) {
         webElement.clear();
-//        if(!webElement.getCssValue("value").isEmpty()) webElement.sendKeys(Keys.BACK_SPACE);
+        if(!webElement.getAttribute("value").isEmpty()) {
+            webElement.sendKeys(Keys.CONTROL + "a");
+            webElement.sendKeys(Keys.DELETE);
+        }
         webElement.sendKeys(text);
     }
 
