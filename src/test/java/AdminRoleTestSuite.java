@@ -22,12 +22,12 @@ public class AdminRoleTestSuite extends BaseTest {
         validMiddleName = getFaker().name().firstName();
         validLastName = getFaker().name().lastName();
         validEmployeeID = getFakerValueService().bothify("?????#####");
+
     }
 
     @Test
     public void TC01_Add_Employee_With_Invalid_Info() {
         homePage.getNavigationSection().selectPage("PIM");
-//        pimPage = PageFactory.getInstance().getPimPage(Driver.getInstance());
         pimPage.clickToButton("Add")
                 .waitForLoadingSpinnerInvisible()
                 .clickToButton("Save")
@@ -45,21 +45,23 @@ public class AdminRoleTestSuite extends BaseTest {
 
     }
 
-    @Test
+    @Test()
     public void TC02_Add_Employee_With_Valid_Info_And_Without_Credentials() {
 
-        pimPage.setTextToNameFields("firstName", validFirstName)
+        homePage.getNavigationSection().selectPage("PIM");
+        pimPage.clickToButton("Add")
+                .setTextToNameFields("firstName", validFirstName)
                 .setTextToNameFields("middleName", validMiddleName)
                 .setTextToNameFields("lastName", validLastName)
                 .setTextToOtherFields("Employee Id", validEmployeeID)
                 .clickToButton("Save")
                 .waitForLoadingSpinnerInvisible()
                 .selectTopbarItem("Employee List")
-                .verifyEmployeeInfoInTableById("3859","First (& Middle) Name", "Dat77206")
-                .verifyEmployeeInfoInTableById("3859","Last Name", "Le87504");
+                .verifyEmployeeInfoInTableById(validEmployeeID, "First (& Middle) Name", validFirstName + " " + validMiddleName)
+                .verifyEmployeeInfoInTableById(validEmployeeID, "Last Name", validLastName);
     }
 
-    public void TC03_Create_Account_In_Admin_Page() {
-        homePage.getNavigationSection().selectPage("My Info");
-    }
+//    public void TC03_Create_Account_In_Admin_Page() {
+//        homePage.getNavigationSection().selectPage("My Info");
+//    }
 }

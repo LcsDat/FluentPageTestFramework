@@ -220,8 +220,8 @@ public class Driver implements FindElementAction, Navigation, Options, Control, 
     }
 
     @Override
-    public <expectedT> void verifyEqual(expectedT expected, expectedT actual) {
-        Assert.assertEquals(expected, actual);
+    public <expectedT> void verifyEqual(expectedT actual, expectedT expected) {
+        Assert.assertEquals(actual, expected);
     }
 
     /**

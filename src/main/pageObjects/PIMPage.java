@@ -40,7 +40,7 @@ public class PIMPage extends WebPageTopbarBodySection {
                 "//input[@name='lastName']/parent::div/following-sibling::span");
     }
 
-    private CoreWebElement otherFieldsErrorMessage(String nameField){
+    private CoreWebElement otherFieldsErrorMessage(String nameField) {
         return driver.findElementByXpath(String.format("//label[text()='%s']/parent::div/following-sibling::span", nameField));
     }
 
@@ -100,7 +100,7 @@ public class PIMPage extends WebPageTopbarBodySection {
         return this;
     }
 
-    public PIMPage selectTopbarItem(String itemName){
+    public PIMPage selectTopbarItem(String itemName) {
         topbarItemName(itemName).click();
         return this;
     }
@@ -110,17 +110,27 @@ public class PIMPage extends WebPageTopbarBodySection {
         return this;
     }
 
-    private List<CoreWebElement> columnHeader (String headerName){
+    private List<CoreWebElement> columnHeader(String headerName) {
         return driver.findElementsByXpath("//div[text()='%s']/preceding::div[@role='columnheader']", headerName);
     }
 
-    private CoreWebElement elementFindByIdAndHeaderIndex(String id, String headerName){
+    private CoreWebElement elementFindByIdAndHeaderIndex(String id, String headerName) {
         var index = columnHeader(headerName).size() + 1;
-        return driver.findElementByXpath("//div[text()='%s']//ancestor::div[@role='row']//div[@role='cell'][" + index +"]", id);
+        return driver.findElementByXpath("//div[text()='%s']//ancestor::div[@role='row']//div[@role='cell'][" + index + "]", id);
     }
+
     public PIMPage verifyEmployeeInfoInTableById(String id, String headerName, String expectedValue) {
-//        driver.verifyEqual(expectedValue, elementFindByIdAndHeaderIndex(id, headerName).getText());
-        driver.verifyValueInTable(columnHeader(headerName), "//div[text()='%s']//ancestor::div[@role='row']//div[@role='cell']", expectedValue, id);
+        String idRow = "//div[text()='%s']";
+        var table = new TableSection(driver);
+
+        for (int i = 2; i <= table.getTotalPage(); i++) {
+            var baseElement = driver.findElementsByXpath(idRow, id);
+            if (baseElement.isEmpty()) table.clickPage(i);
+            else break;
+        }
+        var verifyText = table.getCellText(id, headerName);
+        driver.verifyEqual(expectedValue, table.getCellText(id, headerName));
+
         return this;
     }
 }
