@@ -1,3 +1,4 @@
+import io.qameta.allure.Step;
 import org.testng.annotations.*;
 
 
@@ -15,6 +16,7 @@ public class LoginPageTestSuite extends BaseTest {
                 .verifyLogoTitle();
     }
 
+    @Step("hello world")
     @Test
     public void TC02_LoginWhenMissingCredentials() {
         loginPage.clickLogin()
