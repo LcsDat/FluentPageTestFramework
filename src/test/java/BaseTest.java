@@ -18,12 +18,13 @@ public class BaseTest {
         driver = Driver.getInstance();
         driver.startBrowser(browser);
         driver.goToUrl(URL);
+        quickAdminLogin();
     }
 
-    @AfterSuite
-    public void afterSuite() {
-        driver.close();
-    }
+//    @AfterSuite
+//    public void afterSuite() {
+//        driver.close();
+//    }
 
     protected Faker gentFaker(Locale locale) {
         return new Faker(locale);
@@ -50,5 +51,9 @@ public class BaseTest {
 
     }
 
+    protected void quickAdminLogin(){
+        LoginPage loginPage = PageFactory.getInstance().getLoginPage(driver);
+        loginPage.setTextUsername("hideyashy").setTextPassword("#Onimusha00").clickLogin();
+    }
 
 }

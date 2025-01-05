@@ -32,6 +32,10 @@ public class CoreWebElement implements ElementAction, Wait {
         webElement.sendKeys(text);
     }
 
+    public void sendKeyboard(Keys keys){
+        webElement.sendKeys(keys);
+    }
+
     /**
      * Get the attribute value of the element, which is properties tab of Dev tool.
      * Some will return null.

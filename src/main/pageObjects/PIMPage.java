@@ -1,3 +1,5 @@
+import org.openqa.selenium.Keys;
+
 import java.util.List;
 
 public class PIMPage extends WebPageTopbarBodySection {
@@ -23,7 +25,7 @@ public class PIMPage extends WebPageTopbarBodySection {
     }
 
     private CoreWebElement createLoginDetailsButton() {
-        return driver.findElementByCss("span.oxd-switch-input.oxd-switch-input--active");
+        return driver.findElementByCss("span.oxd-switch-input.--label-right");
     }
 
     private CoreWebElement button(String buttonName) {
@@ -68,11 +70,13 @@ public class PIMPage extends WebPageTopbarBodySection {
 
     public PIMPage setTextToNameFields(String nameFields, String value) {
         employeeNameFieldsInput(nameFields).setText(value);
+        employeeNameFieldsInput(nameFields).sendKeyboard(Keys.TAB);
         return this;
     }
 
     public PIMPage setTextToOtherFields(String nameField, String value) {
         otherFieldsInput(nameField).setText(value);
+        otherFieldsInput(nameField).sendKeyboard(Keys.TAB);
         return this;
     }
 
@@ -106,7 +110,7 @@ public class PIMPage extends WebPageTopbarBodySection {
     }
 
     public PIMPage verifyOtherFieldsErrorMessage(String nameField, String expectedErrorMessage) {
-        driver.verifyEqual(expectedErrorMessage, otherFieldsErrorMessage(nameField).getText());
+        driver.verifyEqual(otherFieldsErrorMessage(nameField).getText(), expectedErrorMessage);
         return this;
     }
 

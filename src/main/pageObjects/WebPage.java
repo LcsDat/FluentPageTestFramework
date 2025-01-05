@@ -1,3 +1,5 @@
+import org.openqa.selenium.Keys;
+
 public abstract class WebPage {
     protected Driver driver;
 
@@ -20,6 +22,5 @@ public abstract class WebPage {
     public TableSection getTableSection() {
         return new TableSection(driver);
     }
-
 
 }

@@ -1,3 +1,5 @@
+import org.openqa.selenium.Keys;
+
 public interface ElementAction {
     void click();
     void setText(String text);
