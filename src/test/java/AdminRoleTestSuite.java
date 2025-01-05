@@ -1,4 +1,3 @@
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class AdminRoleTestSuite extends BaseTest {
@@ -6,7 +5,7 @@ public class AdminRoleTestSuite extends BaseTest {
     PIMPage pimPage;
 
     String alphaNumeric = "[A-Za-z0-9]";
-    String nongAlphaNumeric = "[^A-Za-z0-9]";
+    String nonAlphaNumeric = "[^A-Za-z0-9]";
     String validFirstName;
     String validMiddleName;
     String validLastName;
@@ -48,7 +47,7 @@ public class AdminRoleTestSuite extends BaseTest {
         invalidShortUsername = "a";
         invalidLongUsername = getRandomString(alphaNumeric + "{41}");
         invalidShortPasswordLength = "#";
-        invalidLongPasswordLength = getRandomString("[A-Z]{20}[0-9]{20}[a-z]{10}" + nongAlphaNumeric +"{15}");
+        invalidLongPasswordLength = getRandomString("ABC"+"[A-Z]{20}[0-9]{20}[a-z]{10}" + nonAlphaNumeric +"{15}");
         missUpperCasePassword = getRandomString("[^A-Z]{20}");
         missNumberPassword = getRandomString("[^0-9]{20}");
         missSpecialCharacterPassword = getRandomString("[A-Za-z0-9]{20}");
@@ -56,8 +55,8 @@ public class AdminRoleTestSuite extends BaseTest {
         validUsername = getFaker().name().username();
         validUsername = getFaker().internet().password();
 
-        System.out.println(invalidLongPasswordLength);
-        System.out.println(invalidLongUsername);
+        System.out.println("long pw " +invalidLongPasswordLength);
+        System.out.println("long user " +invalidLongUsername);
         System.out.println(missNumberPassword);
         System.out.println(missUpperCasePassword);
         System.out.println(missSpecialCharacterPassword);
