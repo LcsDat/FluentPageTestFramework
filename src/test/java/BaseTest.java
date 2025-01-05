@@ -5,6 +5,7 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
 
+import java.io.File;
 import java.util.Locale;
 
 public class BaseTest {
@@ -13,6 +14,7 @@ public class BaseTest {
     @Parameters({"browser", "url"})
     @BeforeSuite
     public void beforeSuite(String browser, String URL) {
+        FileUtil.deleteFiles(GlobalConstant.TEST_OUTPUT_PATH);
         driver = Driver.getInstance();
         driver.startBrowser(browser);
         driver.goToUrl(URL);
@@ -47,4 +49,6 @@ public class BaseTest {
         }
 
     }
+
+
 }
