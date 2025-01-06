@@ -1,4 +1,5 @@
-import io.qameta.allure.Step;
+import io.qameta.allure.*;
+import io.qameta.allure.testng.Tag;
 import org.testng.annotations.*;
 
 
@@ -10,31 +11,54 @@ public class LoginPageTestSuite extends BaseTest {
         loginPage = PageFactory.getInstance().getLoginPage(driver);
     }
 
-    @Test
-    public void TC01_VerifyHeaderAndLogo() {
+    @Description("Login Page: Verify Header and Logo are displayed")
+    @Severity(SeverityLevel.MINOR)
+    @Owner(GlobalConstant.OWNER)
+    @Tag("Functional") @Tag("Login")
+    @Test(testName = "Login")
+    public void TC01() {
         loginPage.verifyLogoDisplayed()
                 .verifyLogoTitle();
     }
 
-    @Step("hello world")
-    @Test
-    public void TC02_LoginWhenMissingCredentials() {
+    @Description("Login Page: Login with invalid credentials")
+    @Severity(SeverityLevel.CRITICAL)
+    @Owner(GlobalConstant.OWNER)
+    @Tag("Functional") @Tag("Login")
+    @Test(testName = "Login")
+    public void TC02() {
+        Allure.step("Click login without input credentials");
         loginPage.clickLogin()
                 .verifyUsernameErrorMessageInfo()
-                .verifyPasswordErrorMessageInfo()
-                .setTextUsername("hideyashy")
-                .verifyUsernameErrorMessUndisplayed()
-                .setTextPassword("hideyashy")
+                .verifyPasswordErrorMessageInfo();
+
+        Allure.step("Input username");
+        loginPage.setTextUsername("hideyashy")
+                .verifyUsernameErrorMessUndisplayed();
+
+        Allure.step("Input password");
+        loginPage.setTextPassword("hideyashy")
                 .verifyPasswordErrorMessUndisplayed();
     }
 
-    @Test
-    public void TC03_LoginWithInvalidCredentials() {
+    @Description("Login Page: Login with wrong password")
+    @Severity(SeverityLevel.MINOR)
+    @Owner(GlobalConstant.OWNER)
+    @Tag("Functional") @Tag("Login")
+    @Test(testName = "Login")
+    public void TC03() {
         loginPage.clickLogin().verifyLoginErrorDisplayed();
     }
 
-    @Test
-    public void TC04_LoginWithValidCredentials() {
-        loginPage.setTextUsername("hideyashy").setTextPassword("#Onimusha00").clickLogin();
+    @Description("Login Page: Login with valid credentials")
+    @Severity(SeverityLevel.NORMAL)
+    @Owner(GlobalConstant.OWNER)
+    @Tag("Functional") @Tag("Login")
+    @Test(testName = "Login")
+    public void TC04() {
+        Allure.step("Input username");
+        loginPage.setTextUsername("hideyashy");
+        Allure.step("Input password");
+        loginPage.setTextPassword("#Onimusha00").clickLogin();
     }
 }

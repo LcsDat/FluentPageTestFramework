@@ -1,6 +1,9 @@
 import com.github.javafaker.Faker;
 import com.github.javafaker.service.FakeValuesService;
 import com.github.javafaker.service.RandomService;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Description;
+import io.qameta.allure.Step;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
@@ -11,20 +14,25 @@ import java.util.Locale;
 public class BaseTest {
     protected Driver driver;
 
+    @Description("Test Suite Setup")
+    @Step("Driver initialization and URL navigation")
     @Parameters({"browser", "url"})
     @BeforeSuite
     public void beforeSuite(String browser, String URL) {
+        Allure.step("Check and clean test output folder");
         FileUtil.deleteFiles(GlobalConstant.TEST_OUTPUT_PATH);
         driver = Driver.getInstance();
         driver.startBrowser(browser);
         driver.goToUrl(URL);
-        quickAdminLogin();
     }
 
-//    @AfterSuite
-//    public void afterSuite() {
-//        driver.close();
-//    }
+    @Description("Test Suite Tear down")
+    @AfterSuite
+    public void afterSuite() {
+
+        Allure.step("Close the browser");
+        driver.close();
+    }
 
     protected Faker gentFaker(Locale locale) {
         return new Faker(locale);

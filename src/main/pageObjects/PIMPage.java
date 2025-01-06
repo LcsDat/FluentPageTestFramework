@@ -1,3 +1,4 @@
+import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 
 import java.util.List;
@@ -46,18 +47,21 @@ public class PIMPage extends WebPageTopbarBodySection {
         return driver.findElementByXpath(String.format("//label[text()='%s']/parent::div/following-sibling::span", nameField));
     }
 
+    @Step("Verify First name error message")
     public PIMPage verifyFirstNameErrorMessage(String expectedErrorMessage) {
         firstNameErrorMessage().waitToBePresented();
         driver.verifyEqual(expectedErrorMessage, firstNameErrorMessage().getText());
         return this;
     }
 
+    @Step("Verify Last name error message")
     public PIMPage verifyLastNameErrorMessage(String expectedErrorMessage) {
         lastNameErrorMessage().waitToBePresented();
         driver.verifyEqual(expectedErrorMessage, lastNameErrorMessage().getText());
         return this;
     }
 
+    @Step("Click to button")
     public PIMPage clickToButton(String buttonName) {
         button(buttonName).click();
         return this;
@@ -68,12 +72,14 @@ public class PIMPage extends WebPageTopbarBodySection {
         return this;
     }
 
+    @Step("Input text related to Name fields")
     public PIMPage setTextToNameFields(String nameFields, String value) {
         employeeNameFieldsInput(nameFields).setText(value);
         employeeNameFieldsInput(nameFields).sendKeyboard(Keys.TAB);
         return this;
     }
 
+    @Step("Input text related to other fields")
     public PIMPage setTextToOtherFields(String nameField, String value) {
         otherFieldsInput(nameField).setText(value);
         otherFieldsInput(nameField).sendKeyboard(Keys.TAB);
@@ -104,11 +110,13 @@ public class PIMPage extends WebPageTopbarBodySection {
         return this;
     }
 
+    @Step("Select top bar item")
     public PIMPage selectTopbarItem(String itemName) {
         topbarItemName(itemName).click();
         return this;
     }
 
+    @Step("Verify other fields error message")
     public PIMPage verifyOtherFieldsErrorMessage(String nameField, String expectedErrorMessage) {
         driver.verifyEqual(otherFieldsErrorMessage(nameField).getText(), expectedErrorMessage);
         return this;

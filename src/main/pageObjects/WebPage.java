@@ -1,3 +1,4 @@
+import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 
 public abstract class WebPage {
@@ -15,6 +16,7 @@ public abstract class WebPage {
         return driver.findElementByCss("p.oxd-text--toast-message");
     }
 
+    @Step("Use Navigation menu")
     public WebPageNavigationSection getNavigationSection() {
         return new WebPageNavigationSection(driver);
     }

@@ -1,3 +1,7 @@
+import io.qameta.allure.*;
+import io.qameta.allure.model.Status;
+import io.qameta.allure.testng.Tag;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class AdminRoleTestSuite extends BaseTest {
@@ -5,7 +9,7 @@ public class AdminRoleTestSuite extends BaseTest {
     PIMPage pimPage;
 
     String alphaNumeric = "[A-Za-z0-9]";
-    String nonAlphaNumeric = "[^A-Za-z0-9]";
+
     String validFirstName;
     String validMiddleName;
     String validLastName;
@@ -16,19 +20,8 @@ public class AdminRoleTestSuite extends BaseTest {
     String validLastName1;
     String validEmployeeID1;
 
-    String validUsername;
-    String validPassword;
 
-    String invalidShortUsername;
-    String invalidLongUsername;
-    String invalidShortPasswordLength;
-    String invalidLongPasswordLength;
-    String missUpperCasePassword;
-    String missNumberPassword;
-    String missSpecialCharacterPassword;
-
-//    @BeforeClass
-    @Test
+    @BeforeClass
     public void beforeClass() {
         driver = Driver.getInstance();
         homePage = PageFactory.getInstance().getHomePage(driver);
@@ -44,94 +37,123 @@ public class AdminRoleTestSuite extends BaseTest {
         validLastName1 = getFaker().name().lastName();
         validEmployeeID1 = getFakerValueService().bothify("?????#####");
 
-        invalidShortUsername = "a";
-        invalidLongUsername = getRandomString(alphaNumeric + "{41}");
-        invalidShortPasswordLength = "#";
-        invalidLongPasswordLength = getRandomString("ABC"+"[A-Z]{20}[0-9]{20}[a-z]{10}" + nonAlphaNumeric +"{15}");
-        missUpperCasePassword = getRandomString("[^A-Z]{20}");
-        missNumberPassword = getRandomString("[^0-9]{20}");
-        missSpecialCharacterPassword = getRandomString("[A-Za-z0-9]{20}");
-
-        validUsername = getFaker().name().username();
-        validUsername = getFaker().internet().password();
-
-        System.out.println("long pw " +invalidLongPasswordLength);
-        System.out.println("long user " +invalidLongUsername);
-        System.out.println(missNumberPassword);
-        System.out.println(missUpperCasePassword);
-        System.out.println(missSpecialCharacterPassword);
     }
 
-//    @Test
-//    public void TC01_Add_Employee_With_Invalid_Info() {
-//        homePage.getNavigationSection().selectPage("PIM");
-//        pimPage.clickToButton("Add")
-//                .waitForLoadingSpinnerInvisible()
-//                .clickToButton("Save")
-//                .verifyFirstNameErrorMessage("Required")
-//                .verifyLastNameErrorMessage("Required")
-//                .setTextToNameFields("firstName",
-//                        getRandomString(alphaNumeric + "{23}" + nongAlphaNumeric + "{11}"))
-//                .verifyFirstNameErrorMessage("Should not exceed 30 characters")
-//                .setTextToNameFields("lastName",
-//                        getRandomString(alphaNumeric + "{23}" + nongAlphaNumeric + "{11}"))
-//                .verifyLastNameErrorMessage("Should not exceed 30 characters")
-//                .setTextToOtherFields("Employee Id",
-//                        getRandomString(alphaNumeric + "{11}"))
-//                .verifyOtherFieldsErrorMessage("Employee Id", "Should not exceed 10 characters");
-//
-//    }
-//
-//    @Test()
-//    public void TC02_Add_Employee_With_Valid_Info_And_Without_Credentials() {
-//
-//        homePage.getNavigationSection().selectPage("PIM");
-//        pimPage.clickToButton("Add")
-//                .setTextToNameFields("firstName", validFirstName)
-//                .setTextToNameFields("middleName", validMiddleName)
-//                .setTextToNameFields("lastName", validLastName)
-//                .setTextToOtherFields("Employee Id", validEmployeeID)
-//                .clickToButton("Save")
-//                .waitForLoadingSpinnerInvisible()
-//                .selectTopbarItem("Employee List")
-//                .verifyEmployeeInfoInTableById(validEmployeeID, "First (& Middle) Name", validFirstName + " " + validMiddleName)
-//                .verifyEmployeeInfoInTableById(validEmployeeID, "Last Name", validLastName);
-//    }
-//
-//    @Test
-//    public void TC03_Add_Employee_With_Valid_Info_And_With_Invalid_Credentials() {
-//        pimPage.selectTopbarItem("Add Employee")
-//                .setTextToNameFields("firstName", validFirstName1)
-//                .setTextToNameFields("middleName", validMiddleName1)
-//                .setTextToNameFields("lastName", validLastName1)
-//                .setTextToOtherFields("Employee Id", validEmployeeID1)
-//                .clickCreateLoginDetails(true)
-//                .clickToButton("Save")
-//                .verifyOtherFieldsErrorMessage("Username", "Required")
-//                .verifyOtherFieldsErrorMessage("Password", "Required")
-//                .setTextToOtherFields("Username", invalidShortUsername)
-//                .verifyOtherFieldsErrorMessage("Username", "Should be at least 5 characters")
-//                .setTextToOtherFields("Username", invalidLongUsername)
-//                .verifyOtherFieldsErrorMessage("Username", "Should not exceed 40 characters");
-//
-//        pimPage.setTextToOtherFields("Password", invalidShortPasswordLength);
-//        sleepInSecond(1);
-//        pimPage.verifyOtherFieldsErrorMessage("Password", "Should have at least 8 characters");
-//        pimPage.setTextToOtherFields("Password", missUpperCasePassword);
-//        sleepInSecond(1);
-//        pimPage.verifyOtherFieldsErrorMessage("Password", "Your password must contain minimum 1 upper-case letter");
-//        pimPage.setTextToOtherFields("Password", missNumberPassword);
-//        sleepInSecond(1);
-//        pimPage.verifyOtherFieldsErrorMessage("Password", "Your password must contain minimum 1 number");
-//        pimPage.setTextToOtherFields("Password", missSpecialCharacterPassword);
-//        sleepInSecond(1);
-//        pimPage.verifyOtherFieldsErrorMessage("Password", "Your password must contain minimum 1 special character");
-//        pimPage.setTextToOtherFields("Password", invalidLongPasswordLength);
-//        sleepInSecond(1);
-//        pimPage.verifyOtherFieldsErrorMessage("Password", "Should not exceed 64 characters");
-//        pimPage.setTextToOtherFields("Password", validPassword)
-//                .setTextToOtherFields("Confirm Password", invalidShortPasswordLength);
-//        sleepInSecond(1);
-//        pimPage.verifyOtherFieldsErrorMessage("Confirm Password", "Passwords do not match");
-//    }
+    @Description("PIM Page: Add Employee with invalid info")
+    @Severity(SeverityLevel.NORMAL)
+    @Owner(GlobalConstant.OWNER)
+    @Tag("Functional") @Tag("Amin")
+    @Test(testName = "Add Employee")
+    public void TC01_Add_Employee() {
+        homePage.getNavigationSection().selectPage("PIM");
+        pimPage.clickToButton("Add")
+                .waitForLoadingSpinnerInvisible()
+                .clickToButton("Save")
+                .verifyFirstNameErrorMessage("Required")
+                .verifyLastNameErrorMessage("Required")
+                .setTextToNameFields("firstName",
+                        getRandomString(RegexPattern.EXCEED_40Chars))
+                .verifyFirstNameErrorMessage("Should not exceed 30 characters")
+                .setTextToNameFields("lastName",
+                        getRandomString(RegexPattern.EXCEED_40Chars))
+                .verifyLastNameErrorMessage("Should not exceed 30 characters")
+                .setTextToOtherFields("Employee Id",
+                        getRandomString(alphaNumeric + "{11}"))
+                .verifyOtherFieldsErrorMessage("Employee Id", "Should not exceed 10 characters");
+
+    }
+
+    @Description("PIM Page: Add Employee without creating account")
+    @Severity(SeverityLevel.NORMAL)
+    @Owner(GlobalConstant.OWNER)
+    @Tag("Functional") @Tag("Amin")
+    @Test(testName = "Add Employee")
+    public void TC02_Add_Employee() {
+
+        homePage.getNavigationSection().selectPage("PIM");
+        pimPage.clickToButton("Add")
+                .setTextToNameFields("firstName", validFirstName)
+                .setTextToNameFields("middleName", validMiddleName)
+                .setTextToNameFields("lastName", validLastName)
+                .setTextToOtherFields("Employee Id", validEmployeeID)
+                .clickToButton("Save")
+                .waitForLoadingSpinnerInvisible()
+                .selectTopbarItem("Employee List")
+                .verifyEmployeeInfoInTableById(validEmployeeID, "First (& Middle) Name", validFirstName + " " + validMiddleName)
+                .verifyEmployeeInfoInTableById(validEmployeeID, "Last Name", validLastName);
+    }
+
+    @Description("PIM Page: Create Employee Account With Invalid Credentials")
+    @Severity(SeverityLevel.CRITICAL)
+    @Owner(GlobalConstant.OWNER)
+    @Tag("Functional") @Tag("Amin")
+    @Test(testName = "Add Employee")
+    public void TC03_Add_Employee() {
+        Allure.step("Input valid info to First, Middle, Last and Employee Id");
+        pimPage.selectTopbarItem("Add Employee")
+                .setTextToNameFields("firstName", validFirstName1)
+                .setTextToNameFields("middleName", validMiddleName1)
+                .setTextToNameFields("lastName", validLastName1)
+                .setTextToOtherFields("Employee Id", validEmployeeID1);
+        Allure.step("Enable Create Login Details");
+        pimPage.clickCreateLoginDetails(true)
+                .clickToButton("Save");
+
+        Allure.step("Username and Password is required");
+        pimPage.verifyOtherFieldsErrorMessage("Username", "Required")
+                .verifyOtherFieldsErrorMessage("Password", "Required");
+
+        Allure.step("Username too short");
+        pimPage.setTextToOtherFields("Username", "a")
+                .verifyOtherFieldsErrorMessage("Username", "Should be at least 5 characters");
+
+        Allure.step("Username too long");
+        pimPage.setTextToOtherFields("Username", getRandomString(RegexPattern.EXCEED_40Chars))
+                .verifyOtherFieldsErrorMessage("Username", "Should not exceed 40 characters");
+
+        Allure.step("Password too short");
+        pimPage.setTextToOtherFields("Password", "a");
+        sleepInSecond(1);
+        pimPage.verifyOtherFieldsErrorMessage("Password",
+                "Should have at least 8 characters");
+
+        Allure.step("Password miss upper case");
+        pimPage.setTextToOtherFields("Password", getRandomString(RegexPattern.NO_UpperCase));
+        sleepInSecond(1);
+        pimPage.verifyOtherFieldsErrorMessage("Password",
+                "Your password must contain minimum 1 upper-case letter");
+
+        Allure.step("Password miss lower case");
+        pimPage.setTextToOtherFields("Password", getRandomString(RegexPattern.NO_LowerCase));
+        sleepInSecond(1);
+        pimPage.verifyOtherFieldsErrorMessage("Password",
+                "Your password must contain minimum 1 lower-case letter");
+
+        Allure.step("Password miss number");
+        pimPage.setTextToOtherFields("Password", getRandomString(RegexPattern.NO_Number));
+        sleepInSecond(1);
+        pimPage.verifyOtherFieldsErrorMessage("Password",
+                "Your password must contain minimum 1 number");
+
+        Allure.step("Password miss special characters");
+        pimPage.setTextToOtherFields("Password", getRandomString(RegexPattern.NO_Special));
+        sleepInSecond(1);
+        pimPage.verifyOtherFieldsErrorMessage("Password",
+                "Your password must contain minimum 1 special character");
+
+        Allure.step("Password too long");
+        pimPage.setTextToOtherFields("Password", getRandomString(RegexPattern.EXCEED_64Chars));
+        sleepInSecond(1);
+        pimPage.setTextToOtherFields("Password", getRandomString(RegexPattern.EXCEED_64Chars));
+        pimPage.verifyOtherFieldsErrorMessage("Password",
+                "Should not exceed 64 characters");
+
+        Allure.step("Password and Confirm Password do not match");
+        pimPage.setTextToOtherFields("Password", getRandomString(RegexPattern.VALID_Password))
+                .setTextToOtherFields("Confirm Password", "b");
+        pimPage.verifyOtherFieldsErrorMessage("Confirm Password",
+                "Passwords do not match");
+    }
+
+
 }

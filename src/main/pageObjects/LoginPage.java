@@ -49,19 +49,19 @@ public class LoginPage extends WebPage {
         super(driver);
     }
 
-    @Step("Login Page: Set text to Username")
+    @Step("Set text to Username")
     public LoginPage setTextUsername(String value) {
         usernameInput().setText(value);
         return this;
     }
 
-    @Step("Login Page: Set text to Password")
+    @Step("Set text to Password")
     public LoginPage setTextPassword(String value) {
         passwordInput().setText(value);
         return this;
     }
 
-    @Step("Login Page: Click to Login button")
+    @Step("Click to Login button")
     public LoginPage clickLogin() {
         loginButton().click();
         return this;
@@ -87,43 +87,43 @@ public class LoginPage extends WebPage {
         return passwordErrorMessage().getText();
     }
 
-    @Step("Login Page: Logo is displayed")
+    @Step("Logo is displayed")
     public LoginPage verifyLogoDisplayed() {
         driver.verifyTrue(isLogoDisplayed());
         return this;
     }
 
-    @Step("Login Page: Title is displayed")
+    @Step("Title is displayed")
     public LoginPage verifyLogoTitle() {
         driver.verifyEqual(getLogoTitle(), "Login");
         return this;
     }
 
-    @Step("Login Page: Username is required to login")
+    @Step("Username is required to login")
     public LoginPage verifyUsernameErrorMessageInfo() {
         driver.verifyEqual(getUsernameErrorMessage(), "Required");
         return this;
     }
 
-    @Step("Login Page: Password is required to login")
+    @Step("Password is required to login")
     public LoginPage verifyPasswordErrorMessageInfo() {
         driver.verifyEqual(getPasswordErrorMessage(), "Required");
         return this;
     }
 
-    @Step("Login Page: Error message is removed when Username is filled")
+    @Step("Error message is removed when Username is filled")
     public LoginPage verifyUsernameErrorMessUndisplayed() {
         driver.verifyUndisplayed(Locator.XPATH, USERNAME_ERROR_MESSAGE, GlobalConstant.SHORT_DURATION);
         return this;
     }
 
-    @Step("Login Page: Error message is removed when Password is filled")
+    @Step("Error message is removed when Password is filled")
     public LoginPage verifyPasswordErrorMessUndisplayed() {
         driver.verifyUndisplayed(Locator.XPATH, PASSWORD_ERROR_MESSAGE, GlobalConstant.SHORT_DURATION);
         return this;
     }
 
-    @Step("Login Page: Login error is displayed")
+    @Step("Login error is displayed")
     public LoginPage verifyLoginErrorDisplayed() {
         driver.verifyTrue(isLoginErrorDisplayed());
         return this;

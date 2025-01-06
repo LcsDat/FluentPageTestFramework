@@ -10,7 +10,16 @@ public class DemoSomething {
     public static void main(String[] args) {
         FakeValuesService fk = new FakeValuesService(new Locale("en"), new RandomService());
 
-        System.out.println(fk.regexify("[A-Za-z0-9]{40}"));
-        fk.bothify("");
+        String noUpperCase = "[a-z]{10}[0-9]{10}[!@#$%^&*()<>?{}]{10}";
+        String noLowerCase = "[A-Z]{10}[0-9]{10}[!@#$%^&*()<>?{}]{10}";
+        String noNumber = "[A-Z]{10}[a-z]{10}[!@#$%^&*()<>?{}]{10}";
+        String noSpecial = "[A-Z]{10}[a-z]{10}[0-9]{10}";
+        char c = (char) 230;
+        System.out.println("no upper case "+ fk.regexify("[200-377]{20}"));
+        System.out.println("no lower case "+ fk.regexify("[^a-z]{20}"));
+        System.out.println(fk.regexify(RegexPattern.NO_UpperCase));
+        System.out.println(fk.regexify(RegexPattern.NO_Number));
+        System.out.println(fk.regexify(RegexPattern.NO_LowerCase));
+        System.out.println(c);
     }
 }
