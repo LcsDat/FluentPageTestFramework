@@ -1,8 +1,10 @@
 import io.qameta.allure.*;
-import io.qameta.allure.model.Status;
 import io.qameta.allure.testng.Tag;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.io.File;
 
 public class AdminRoleTestSuite extends BaseTest {
     HomePage homePage;
@@ -20,7 +22,10 @@ public class AdminRoleTestSuite extends BaseTest {
     String validLastName1;
     String validEmployeeID1;
 
+    String validUsername;
+    String validPassword;
 
+    @Description("Page Initialization and prepare test data")
     @BeforeClass
     public void beforeClass() {
         driver = Driver.getInstance();
@@ -37,12 +42,17 @@ public class AdminRoleTestSuite extends BaseTest {
         validLastName1 = getFaker().name().lastName();
         validEmployeeID1 = getFakerValueService().bothify("?????#####");
 
+        validUsername = getFakerValueService().bothify("???????#####");
+        validPassword = getRandomString(RegexPattern.VALID_Password);
+
+        quickAdminLogin();
     }
 
     @Description("PIM Page: Add Employee with invalid info")
     @Severity(SeverityLevel.NORMAL)
     @Owner(GlobalConstant.OWNER)
-    @Tag("Functional") @Tag("Amin")
+    @Tag("Functional")
+    @Tag("Amin")
     @Test(testName = "Add Employee")
     public void TC01_Add_Employee() {
         homePage.getNavigationSection().selectPage("PIM");
@@ -66,7 +76,8 @@ public class AdminRoleTestSuite extends BaseTest {
     @Description("PIM Page: Add Employee without creating account")
     @Severity(SeverityLevel.NORMAL)
     @Owner(GlobalConstant.OWNER)
-    @Tag("Functional") @Tag("Amin")
+    @Tag("Functional")
+    @Tag("Amin")
     @Test(testName = "Add Employee")
     public void TC02_Add_Employee() {
 
@@ -86,7 +97,8 @@ public class AdminRoleTestSuite extends BaseTest {
     @Description("PIM Page: Create Employee Account With Invalid Credentials")
     @Severity(SeverityLevel.CRITICAL)
     @Owner(GlobalConstant.OWNER)
-    @Tag("Functional") @Tag("Amin")
+    @Tag("Functional")
+    @Tag("Amin")
     @Test(testName = "Add Employee")
     public void TC03_Add_Employee() {
         Allure.step("Input valid info to First, Middle, Last and Employee Id");
@@ -156,4 +168,26 @@ public class AdminRoleTestSuite extends BaseTest {
     }
 
 
+    @Description("PIM Page: Create Employee Account With Valid Credentials")
+    @Severity(SeverityLevel.NORMAL)
+    @Owner(GlobalConstant.OWNER)
+    @Tag("Functional")
+    @Tag("Amin")
+    @Test(testName = "Add Employee")
+    public void TC04_Add_Employee() {
+        pimPage.setTextToOtherFields("Username", validUsername)
+                .setTextToOtherFields("Password", validPassword)
+                .setTextToOtherFields("Confirm Password", validPassword);
+
+        String defaultImageSrc = pimPage.getImageSource();
+
+        pimPage.uploadImage(GlobalConstant.IMAGE_PATH + File.separator + "Lion.jpg")
+                .clickToButton("Save")
+                .waitForLoadingSpinnerInvisible();
+
+        String uploadedImageSrc = pimPage.getImageSource();
+
+        Allure.step("Verify image source is changed after uploading image");
+        Assert.assertNotEquals(defaultImageSrc, uploadedImageSrc);
+    }
 }

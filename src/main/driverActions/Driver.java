@@ -94,6 +94,13 @@ public class Driver implements FindElementAction, Navigation, Options, Control, 
         return new CoreWebElement(webDriver, nativeElement, cssStrategy);
     }
 
+    public CoreWebElement findElementByCss(String locatorValue, String... varargs) {
+        var cssStrategy = ElementFindingStrategy.getByCss(String.format(locatorValue, varargs));
+        var nativeElement = webDriver.findElement(cssStrategy);
+
+        return new CoreWebElement(webDriver, nativeElement, cssStrategy);
+    }
+
     @Override
     public List<CoreWebElement> findElements(Locator locatorStrategy, String locatorValue) {
         var nativeElements = webDriver.findElements(getBy(locatorStrategy, locatorValue));

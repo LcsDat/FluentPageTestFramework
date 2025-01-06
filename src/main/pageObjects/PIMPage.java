@@ -1,5 +1,6 @@
 import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
+import org.testng.Assert;
 
 import java.util.List;
 
@@ -45,6 +46,19 @@ public class PIMPage extends WebPageTopbarBodySection {
 
     private CoreWebElement otherFieldsErrorMessage(String nameField) {
         return driver.findElementByXpath(String.format("//label[text()='%s']/parent::div/following-sibling::span", nameField));
+    }
+
+    private CoreWebElement fileInput(){
+        return driver.findElementByCss("input[type='file']");
+    }
+
+    private CoreWebElement image() {
+        return driver.findElementByCss("img.employee-image");
+    }
+
+    @Step("Get the image source")
+    public String getImageSource(){
+        return image().getAttribute("currentSrc");
     }
 
     @Step("Verify First name error message")
@@ -143,6 +157,17 @@ public class PIMPage extends WebPageTopbarBodySection {
         var verifyText = table.getCellText(id, headerName);
         driver.verifyEqual(expectedValue, table.getCellText(id, headerName));
 
+        return this;
+    }
+
+    @Step("Upload image")
+    public PIMPage uploadImage(String filePath) {
+        fileInput().uploadFile(filePath);
+        return this;
+    }
+
+    public PIMPage verifyImageDisplayed() {
+        Assert.assertTrue(image().isDisplayed());
         return this;
     }
 }

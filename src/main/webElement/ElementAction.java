@@ -7,4 +7,5 @@ public interface ElementAction {
     String getCssProperty(String cssValue);
     String getText();
     boolean isDisplayed();
+    void uploadFile(String filePath);
 }

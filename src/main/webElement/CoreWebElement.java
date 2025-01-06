@@ -63,6 +63,11 @@ public class CoreWebElement implements ElementAction, Wait {
     }
 
     @Override
+    public void uploadFile(String filePath) {
+        webElement.sendKeys(filePath);
+    }
+
+    @Override
     public void waitToClick() {
         new WebDriverWait(webDriver, GlobalConstant.LONG_DURATION).until(ExpectedConditions.elementToBeClickable(by));
     }

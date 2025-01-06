@@ -6,6 +6,7 @@ import org.testng.annotations.*;
 public class LoginPageTestSuite extends BaseTest {
     LoginPage loginPage;
 
+    @Description("Page Initialization")
     @BeforeClass
     public void beforeClass() {
         loginPage = PageFactory.getInstance().getLoginPage(driver);
