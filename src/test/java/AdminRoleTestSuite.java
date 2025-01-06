@@ -9,6 +9,7 @@ import java.io.File;
 public class AdminRoleTestSuite extends BaseTest {
     HomePage homePage;
     PIMPage pimPage;
+    AdminPage adminPage;
 
     String alphaNumeric = "[A-Za-z0-9]";
 
@@ -31,6 +32,7 @@ public class AdminRoleTestSuite extends BaseTest {
         driver = Driver.getInstance();
         homePage = PageFactory.getInstance().getHomePage(driver);
         pimPage = PageFactory.getInstance().getPimPage(driver);
+        adminPage = PageFactory.getInstance().getAdminPage(driver);
 
         validFirstName = getFaker().name().firstName();
         validMiddleName = getFaker().name().firstName();
@@ -189,5 +191,12 @@ public class AdminRoleTestSuite extends BaseTest {
 
         Allure.step("Verify image source is changed after uploading image");
         Assert.assertNotEquals(defaultImageSrc, uploadedImageSrc);
+
+        pimPage.getNavigationSection().selectPage("Admin");
+
+        adminPage.verifyEmployeeAccountInfoInTableByUsername(
+                        validUsername, "User Role", "ESS")
+                .verifyEmployeeAccountInfoInTableByUsername(
+                        validUsername, "Employee Name", validFirstName1 + " " + validLastName1);
     }
 }

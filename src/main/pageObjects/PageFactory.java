@@ -21,7 +21,11 @@ public class PageFactory {
         return new HomePage(driver);
     }
 
-    public PIMPage getPimPage(Driver driver){
+    public PIMPage getPimPage(Driver driver) {
         return new PIMPage(driver);
+    }
+
+    public AdminPage getAdminPage(Driver driver) {
+        return new AdminPage(driver);
     }
 }
