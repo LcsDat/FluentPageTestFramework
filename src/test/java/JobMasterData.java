@@ -13,7 +13,7 @@ public class JobMasterData extends BaseTest {
     }
 
     @Test
-    public void JobMasterData01() {
+    public void JobMasterData01() throws InterruptedException {
         homePage.getNavigationSection().selectPage("Admin");
 //        adminPage.selectTopBarItem("Job")
 //                .selectDropDownItemName("Job Titles")
@@ -24,7 +24,7 @@ public class JobMasterData extends BaseTest {
         adminPage.selectTopBarItem("Job")
                 .selectDropDownItemName("Pay Grades")
                 .clickToButton("Add")
-                .setTextToField("Name", "Level 82")
+                .setTextToField("Name", "Level 78")
                 .clickToButton("Save")
                 .clickToButton("Add")
                 .selectACurrency("USD")
@@ -34,14 +34,16 @@ public class JobMasterData extends BaseTest {
                 .selectTopBarItem("Job")
                 .selectDropDownItemName("Employment Status")
                 .clickToButton("Add")
-                .setTextToField("Name", "Retired")
+                .setTextToField("Name", "Retireddddddd")
                 .selectTopBarItem("Job")
                 .selectDropDownItemName("Work Shifts")
                 .clickToButton("Add")
-                .setTextToField("Shift Name", "Shift 1")
-                .setWorkingHours("10:00 AM", "06:00 PM")
-                .clickToButton("Save");
-
+                .waitForLoadingSpinnerInvisible()
+                .setTextToField("Shift Name", "Shift 11")
+                .setWorkingHours("10:00 AM", "06:00 PM");
+//        sleepInSecond(2);
+        adminPage.clickToButton("Save");
+        adminPage.clickToButton("Save");
 
     }
 }

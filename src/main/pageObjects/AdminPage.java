@@ -27,8 +27,9 @@ public class AdminPage extends WebPageTopbarBodySection {
      * @param toTime   format should be "hh:mm a"
      * @return
      */
-    public AdminPage setWorkingHours(String fromTime, String toTime) {
+    public AdminPage setWorkingHours(String fromTime, String toTime) throws InterruptedException {
         inputByLabelName("From").setText(fromTime);
+        Thread.sleep(1000);
         inputByLabelName("To").setText(toTime);
         return this;
     }
@@ -40,10 +41,10 @@ public class AdminPage extends WebPageTopbarBodySection {
      */
     public AdminPage selectACurrency(String currencyCode) {
         jobCurrencyButton().click();
-        jobCurrencyDropdown().setText(currencyCode.substring(0, 1));
+//        jobCurrencyDropdown().setText(currencyCode.substring(0, 1));
         while (true) {
             String currency = jobCurrencyDropdown().getText();
-            if (currency.equals(currencyCode)) {
+            if (currencyCode.equals(currency.substring(0,3))) {
                 jobCurrencyDropdown().sendKeyboard(Keys.ENTER);
                 break;
             } else jobCurrencyDropdown().sendKeyboard(Keys.DOWN);
