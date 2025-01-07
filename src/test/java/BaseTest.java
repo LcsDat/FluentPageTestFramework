@@ -27,13 +27,13 @@ public class BaseTest {
 
     }
 
-    @Description("Test Suite Tear down")
-    @AfterSuite
-    public void afterSuite() {
-
-        Allure.step("Close the browser");
-        driver.close();
-    }
+//    @Description("Test Suite Tear down")
+//    @AfterSuite
+//    public void afterSuite() {
+//
+//        Allure.step("Close the browser");
+//        driver.close();
+//    }
 
     protected Faker gentFaker(Locale locale) {
         return new Faker(locale);

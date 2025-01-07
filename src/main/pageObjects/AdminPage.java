@@ -8,25 +8,42 @@ public class AdminPage extends WebPageTopbarBodySection {
 
     private CoreWebElement jobCurrencyDropdown() {
         return driver.findElementByCss("div.oxd-select-text-input");
+    }private CoreWebElement jobCurrencyButton() {
+        return driver.findElementByCss("div.oxd-select-text-input");
+    }
+
+    private CoreWebElement saveCurrencyButton(){
+        return driver.findElementByXpath("//h6[text()='Add Currency']/parent::div//button[normalize-space()='Save']");
+    }
+    public AdminPage waitForLoadingSpinnerInvisible() {
+        loadingSpinner().waitToBeInvisible();
+        return this;
     }
 
     /**
      * This method will schedule working hours for Employee
+     *
      * @param fromTime format should be "hh:mm a"
-     * @param toTime format should be "hh:mm a"
+     * @param toTime   format should be "hh:mm a"
      * @return
      */
-    public AdminPage setWorkingHours(String fromTime, String toTime){
+    public AdminPage setWorkingHours(String fromTime, String toTime) {
         inputByLabelName("From").setText(fromTime);
         inputByLabelName("To").setText(toTime);
-        return this;}
+        return this;
+    }
 
+    /**
+     * The currency code base one ISO 4217
+     * @param currencyCode
+     * @return
+     */
     public AdminPage selectACurrency(String currencyCode) {
-        jobCurrencyDropdown().click();
-        jobCurrencyDropdown().setText(currencyCode.substring(0,1));
-        while(true) {
+        jobCurrencyButton().click();
+        jobCurrencyDropdown().setText(currencyCode.substring(0, 1));
+        while (true) {
             String currency = jobCurrencyDropdown().getText();
-            if(currency.equals(currencyCode)) {
+            if (currency.equals(currencyCode)) {
                 jobCurrencyDropdown().sendKeyboard(Keys.ENTER);
                 break;
             } else jobCurrencyDropdown().sendKeyboard(Keys.DOWN);
@@ -74,4 +91,8 @@ public class AdminPage extends WebPageTopbarBodySection {
     }
 
 
+    public AdminPage clickToSaveCurrency() {
+        saveCurrencyButton().click();
+        return this;
+    }
 }

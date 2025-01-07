@@ -79,6 +79,6 @@ public class CoreWebElement implements ElementAction, Wait {
 
     @Override
     public void waitToBeInvisible() {
-        new WebDriverWait(webDriver, GlobalConstant.LONG_DURATION).until(ExpectedConditions.invisibilityOfElementLocated(by));
+        new WebDriverWait(webDriver, GlobalConstant.LONG_DURATION).until(ExpectedConditions.invisibilityOf(webElement));
     }
 }

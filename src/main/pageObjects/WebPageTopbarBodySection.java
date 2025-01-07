@@ -8,7 +8,7 @@ public abstract class WebPageTopbarBodySection extends WebPage {
     }
 
     protected CoreWebElement dropDownItemName(String itemName) {
-        return driver.findElementByXpath("//ul[@class='oxd-dropdown-menu']//a[normalize-space()='Job Titles']", itemName);
+        return driver.findElementByXpath("//ul[@class='oxd-dropdown-menu']//a[normalize-space()='%s']", itemName);
     }
 
     public abstract Object selectTopBarItem(String itemName);
