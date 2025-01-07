@@ -24,6 +24,7 @@ public class BaseTest {
         driver = Driver.getInstance();
         driver.startBrowser(browser);
         driver.goToUrl(URL);
+
     }
 
     @Description("Test Suite Tear down")

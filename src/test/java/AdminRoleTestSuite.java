@@ -91,7 +91,7 @@ public class AdminRoleTestSuite extends BaseTest {
                 .setTextToOtherFields("Employee Id", validEmployeeID)
                 .clickToButton("Save")
                 .waitForLoadingSpinnerInvisible()
-                .selectTopbarItem("Employee List")
+                .selectTopBarItem("Employee List")
                 .verifyEmployeeInfoInTableById(validEmployeeID, "First (& Middle) Name", validFirstName + " " + validMiddleName)
                 .verifyEmployeeInfoInTableById(validEmployeeID, "Last Name", validLastName);
     }
@@ -104,7 +104,7 @@ public class AdminRoleTestSuite extends BaseTest {
     @Test(testName = "Add Employee")
     public void TC03_Add_Employee() {
         Allure.step("Input valid info to First, Middle, Last and Employee Id");
-        pimPage.selectTopbarItem("Add Employee")
+        pimPage.selectTopBarItem("Add Employee")
                 .setTextToNameFields("firstName", validFirstName1)
                 .setTextToNameFields("middleName", validMiddleName1)
                 .setTextToNameFields("lastName", validLastName1)

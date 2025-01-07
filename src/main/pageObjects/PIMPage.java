@@ -10,6 +10,11 @@ public class PIMPage extends WebPageTopbarBodySection {
         super(driver);
     }
 
+    public PIMPage setTextToField(String labelName, String value) {
+        inputByLabelName(labelName).setText(value);
+        return this;
+    }
+
     private CoreWebElement addButton() {
         return driver.findElementByXpath("//button[normalize-space()='Add']");
     }
@@ -28,10 +33,6 @@ public class PIMPage extends WebPageTopbarBodySection {
 
     private CoreWebElement createLoginDetailsButton() {
         return driver.findElementByCss("span.oxd-switch-input.--label-right");
-    }
-
-    private CoreWebElement button(String buttonName) {
-        return driver.findElementByXpath(String.format("//button[normalize-space()='%s']", buttonName));
     }
 
     private CoreWebElement firstNameErrorMessage() {
@@ -125,8 +126,8 @@ public class PIMPage extends WebPageTopbarBodySection {
     }
 
     @Step("Select top bar item")
-    public PIMPage selectTopbarItem(String itemName) {
-        topbarItemName(itemName).click();
+    public PIMPage selectTopBarItem(String itemName) {
+        topBarName(itemName).click();
         return this;
     }
 

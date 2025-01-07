@@ -1,14 +1,16 @@
-public class WebPageTopbarBodySection extends WebPage {
+public abstract class WebPageTopbarBodySection extends WebPage {
     public WebPageTopbarBodySection(Driver driver) {
         super(driver);
     }
 
-    protected CoreWebElement topbarItemName(String itemName) {
-        return driver.findElementByXpath("//nav[@aria-label='Topbar Menu']//child::li[normalize-space()='" + itemName + "']");
+    protected CoreWebElement topBarName(String topBarName) {
+        return driver.findElementByXpath("//nav[@aria-label='Topbar Menu']//child::li[normalize-space()='" + topBarName + "']");
     }
 
-    public Object selectTopbarItem(String itemName){
-        topbarItemName(itemName).click();
-        return new Object();
+    protected CoreWebElement dropDownItemName(String itemName) {
+        return driver.findElementByXpath("//ul[@class='oxd-dropdown-menu']//a[normalize-space()='Job Titles']", itemName);
     }
+
+    public abstract Object selectTopBarItem(String itemName);
+
 }

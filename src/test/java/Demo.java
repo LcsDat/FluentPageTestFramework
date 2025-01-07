@@ -1,15 +1,15 @@
-import org.apache.commons.io.FileUtils;
-import org.testng.annotations.Test;
-
-import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Demo {
 
-    public static void main(String[] args) throws IOException {
-        System.out.println(GlobalConstant.TEST_OUTPUT_PATH);
-        File file = new File("./allure-results");
-        FileUtils.cleanDirectory(file);
+    public static void main(String[] args) throws IOException, ParseException {
+        DateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+
+        Date a = dateFormat.parse("18:00 PM");
+        System.out.println(a);
     }
 }
