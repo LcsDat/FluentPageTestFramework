@@ -1,13 +1,15 @@
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class JobMasterData extends BaseTest {
     HomePage homePage;
     AdminPage adminPage;
 
+    @Parameters({"browser", "url"})
     @BeforeClass
-    public void beforeClass() {
-        quickAdminLogin();
+    public void beforeClass(String browser, String URL) {
+        quickAdminLogin(browser, URL);
         homePage = PageFactory.getInstance().getHomePage(driver);
         adminPage = PageFactory.getInstance().getAdminPage(driver);
     }
@@ -15,12 +17,12 @@ public class JobMasterData extends BaseTest {
     @Test
     public void JobMasterData01() throws InterruptedException {
         homePage.getNavigationSection().selectPage("Admin");
-//        adminPage.selectTopBarItem("Job")
-//                .selectDropDownItemName("Job Titles")
-//                .clickToButton("Add")
-//                .setTextToField("Job Title", "Factory Engineer 6")
-//                .clickToButton("Save")
-//                .waitForLoadingSpinnerInvisible();
+        adminPage.selectTopBarItem("Job")
+                .selectDropDownItemName("Job Titles")
+                .clickToButton("Add")
+                .setTextToField("Job Title", "Factory Engineer 6")
+                .clickToButton("Save")
+                .waitForLoadingSpinnerInvisible();
         adminPage.selectTopBarItem("Job")
                 .selectDropDownItemName("Pay Grades")
                 .clickToButton("Add")
@@ -30,20 +32,19 @@ public class JobMasterData extends BaseTest {
                 .selectACurrency("ALL - Albanian Lek")
                 .setTextToField("Minimum Salary", "4000")
                 .setTextToField("Maximum Salary", "40000")
-                .clickToSaveCurrency();
-//                .selectTopBarItem("Job")
-//                .selectDropDownItemName("Employment Status")
-//                .clickToButton("Add")
-//                .setTextToField("Name", "Retireddddddd")
-//                .selectTopBarItem("Job")
-//                .selectDropDownItemName("Work Shifts")
-//                .clickToButton("Add")
-//                .waitForLoadingSpinnerInvisible()
-//                .setTextToField("Shift Name", "Shift 11")
-//                .setWorkingHours("10:00 AM", "06:00 PM");
-//        sleepInSecond(2);
-//        adminPage.clickToButton("Save");
-//        adminPage.clickToButton("Save");
+                .clickToSaveCurrency()
+                .selectTopBarItem("Job")
+                .selectDropDownItemName("Employment Status")
+                .clickToButton("Add")
+                .setTextToField("Name", "Retireddddddd")
+                .selectTopBarItem("Job")
+                .selectDropDownItemName("Work Shifts")
+                .clickToButton("Add")
+                .waitForLoadingSpinnerInvisible()
+                .setTextToField("Shift Name", "Shift 11")
+                .setWorkingHours("10:00 AM", "06:00 PM");
+        adminPage.clickToButton("Save");
+        adminPage.clickToButton("Save");
 
     }
 }

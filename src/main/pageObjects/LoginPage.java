@@ -55,8 +55,8 @@ public class LoginPage extends WebPage {
         return this;
     }
 
-    @Step("Set text to Password")
     public LoginPage setTextPassword(String value) {
+        Allure.step("Set text to Password", step -> {step.parameter("Password", "**********");});
         passwordInput().setText(value);
         return this;
     }

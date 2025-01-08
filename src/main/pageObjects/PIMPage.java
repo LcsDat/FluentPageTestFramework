@@ -141,9 +141,8 @@ public class PIMPage extends WebPageTopbarBodySection {
         return driver.findElementsByXpath("//div[text()='%s']/preceding::div[@role='columnheader']", headerName);
     }
 
-    private CoreWebElement elementFindByIdAndHeaderIndex(String id, String headerName) {
-        var index = columnHeader(headerName).size() + 1;
-        return driver.findElementByXpath("//div[text()='%s']//ancestor::div[@role='row']//div[@role='cell'][" + index + "]", id);
+    private CoreWebElement rowById(String employeeId) {
+        return driver.findElementByXpath("//div[text()='%s']", employeeId);
     }
 
     public PIMPage verifyEmployeeInfoInTableById(String id, String headerName, String expectedValue) {
@@ -171,4 +170,14 @@ public class PIMPage extends WebPageTopbarBodySection {
         Assert.assertTrue(image().isDisplayed());
         return this;
     }
+
+    public PIMPage selectEmployeeById(String employeeId) {
+        rowById(employeeId).click();
+        return this;
+    }
+
+    public PersonalDetailsSection getPersonalDetails(){
+        return new PersonalDetailsSection(driver);
+    }
+
 }

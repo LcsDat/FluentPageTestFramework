@@ -1,7 +1,9 @@
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -26,10 +28,11 @@ public class AdminRoleTestSuite extends BaseTest {
     String validUsername;
     String validPassword;
 
+    @Parameters({"browser", "url"})
     @Description("Page Initialization and prepare test data")
     @BeforeClass
-    public void beforeClass() {
-        driver = Driver.getInstance();
+    public void beforeClass(String browser, String url) {
+        quickAdminLogin(browser, url);
         homePage = PageFactory.getInstance().getHomePage(driver);
         pimPage = PageFactory.getInstance().getPimPage(driver);
         adminPage = PageFactory.getInstance().getAdminPage(driver);
@@ -47,7 +50,11 @@ public class AdminRoleTestSuite extends BaseTest {
         validUsername = getFakerValueService().bothify("???????#####");
         validPassword = getRandomString(RegexPattern.VALID_Password);
 
-        quickAdminLogin();
+    }
+
+    @AfterClass
+    public void beforeClass() {
+        closeBrowser();
     }
 
     @Description("PIM Page: Add Employee with invalid info")
