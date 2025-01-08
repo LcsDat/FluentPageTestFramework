@@ -24,26 +24,26 @@ public class JobMasterData extends BaseTest {
         adminPage.selectTopBarItem("Job")
                 .selectDropDownItemName("Pay Grades")
                 .clickToButton("Add")
-                .setTextToField("Name", "Level 78")
+                .setTextToField("Name", "Level 784")
                 .clickToButton("Save")
                 .clickToButton("Add")
-                .selectACurrency("USD")
+                .selectACurrency("ALL - Albanian Lek")
                 .setTextToField("Minimum Salary", "4000")
                 .setTextToField("Maximum Salary", "40000")
-                .clickToSaveCurrency()
-                .selectTopBarItem("Job")
-                .selectDropDownItemName("Employment Status")
-                .clickToButton("Add")
-                .setTextToField("Name", "Retireddddddd")
-                .selectTopBarItem("Job")
-                .selectDropDownItemName("Work Shifts")
-                .clickToButton("Add")
-                .waitForLoadingSpinnerInvisible()
-                .setTextToField("Shift Name", "Shift 11")
-                .setWorkingHours("10:00 AM", "06:00 PM");
+                .clickToSaveCurrency();
+//                .selectTopBarItem("Job")
+//                .selectDropDownItemName("Employment Status")
+//                .clickToButton("Add")
+//                .setTextToField("Name", "Retireddddddd")
+//                .selectTopBarItem("Job")
+//                .selectDropDownItemName("Work Shifts")
+//                .clickToButton("Add")
+//                .waitForLoadingSpinnerInvisible()
+//                .setTextToField("Shift Name", "Shift 11")
+//                .setWorkingHours("10:00 AM", "06:00 PM");
 //        sleepInSecond(2);
-        adminPage.clickToButton("Save");
-        adminPage.clickToButton("Save");
+//        adminPage.clickToButton("Save");
+//        adminPage.clickToButton("Save");
 
     }
 }

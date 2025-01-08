@@ -1,19 +1,18 @@
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class CoreWebElement implements ElementAction, Wait {
+public class CoreWebElement implements ElementAction, Wait, jsExecutorAction {
     private WebElement webElement;
     private WebDriver webDriver;
     private By by;
+    private JavascriptExecutor javascriptExecutor;
 
     public CoreWebElement(WebDriver webDriver,WebElement webElement, By by) {
         this.webDriver = webDriver;
         this.webElement = webElement;
         this.by = by;
+        this.javascriptExecutor = (JavascriptExecutor) webDriver;
     }
 
     @Override
@@ -79,6 +78,12 @@ public class CoreWebElement implements ElementAction, Wait {
 
     @Override
     public void waitToBeInvisible() {
-        new WebDriverWait(webDriver, GlobalConstant.LONG_DURATION).until(ExpectedConditions.invisibilityOf(webElement));
+        new WebDriverWait(webDriver, GlobalConstant.LONG_DURATION).until(ExpectedConditions.invisibilityOf(webElement ));
+    }
+
+    @Override
+    public void setTextByJs(String value) {
+        System.out.println(webElement.getAttribute("innerText"));
+        javascriptExecutor.executeScript("arguments[0].innerText = '" + value + "'", webElement);
     }
 }

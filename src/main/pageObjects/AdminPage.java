@@ -21,6 +21,16 @@ public class AdminPage extends WebPageTopbarBodySection {
     }
 
     /**
+     * The option is a full value in the dropdown
+     * @param currencyOption
+     * @return
+     */
+    public AdminPage selectACurrency(String currencyOption) {
+        jobCurrencyDropdown().setTextByJs(currencyOption);
+        return this;
+    }
+
+    /**
      * This method will schedule working hours for Employee
      *
      * @param fromTime format should be "hh:mm a"
@@ -34,23 +44,22 @@ public class AdminPage extends WebPageTopbarBodySection {
         return this;
     }
 
-    /**
-     * The currency code base one ISO 4217
-     * @param currencyCode
-     * @return
-     */
-    public AdminPage selectACurrency(String currencyCode) {
-        jobCurrencyButton().click();
-//        jobCurrencyDropdown().setText(currencyCode.substring(0, 1));
-        while (true) {
-            String currency = jobCurrencyDropdown().getText();
-            if (currencyCode.equals(currency.substring(0,3))) {
-                jobCurrencyDropdown().sendKeyboard(Keys.ENTER);
-                break;
-            } else jobCurrencyDropdown().sendKeyboard(Keys.DOWN);
-        }
-        return this;
-    }
+//    /**
+//     * The currency code base one ISO 4217
+//     * @param currencyCode
+//     * @return
+//     */
+//    public AdminPage selectACurrency(String currencyCode) {
+//        jobCurrencyButton().click();
+//        while (true) {
+//            String currency = jobCurrencyDropdown().getText();
+//            if (currencyCode.equals(currency.substring(0,3))) {
+//                jobCurrencyDropdown().sendKeyboard(Keys.ENTER);
+//                break;
+//            } else jobCurrencyDropdown().sendKeyboard(Keys.DOWN);
+//        }
+//        return this;
+//    }
 
     public AdminPage setTextToField(String labelName, String value) {
         inputByLabelName(labelName).setText(value);
