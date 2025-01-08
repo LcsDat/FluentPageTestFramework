@@ -9,6 +9,7 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Locale;
 
 public class BaseTest {
@@ -27,13 +28,13 @@ public class BaseTest {
 
     }
 
-//    @Description("Test Suite Tear down")
-//    @AfterSuite
-//    public void afterSuite() {
-//
-//        Allure.step("Close the browser");
-//        driver.close();
-//    }
+    @Description("Test Suite Tear down")
+    @AfterSuite
+    public void afterSuite() {
+
+        Allure.step("Quit all browsers");
+        closeBrowserDriver();
+    }
 
     protected Faker gentFaker(Locale locale) {
         return new Faker(locale);
@@ -47,22 +48,69 @@ public class BaseTest {
         FakeValuesService fvs = new FakeValuesService(new Locale("en"), new RandomService());
         return fvs.regexify(regex);
     }
+
     protected FakeValuesService getFakerValueService() {
         return new FakeValuesService(new Locale("en"), new RandomService());
     }
 
-    protected void sleepInSecond(long second){
+    protected void sleepInSecond(long second) {
         try {
-            Thread.sleep(second*1000);
+            Thread.sleep(second * 1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
     }
 
-    protected void quickAdminLogin(){
+    @Step("Quick login using Admin credentials")
+    protected void quickAdminLogin() {
         LoginPage loginPage = PageFactory.getInstance().getLoginPage(driver);
         loginPage.setTextUsername("hideyashy").setTextPassword("#Onimusha00").clickLogin();
     }
 
+    protected void closeBrowserDriver() {
+        String cmd = null;
+        try {
+            String osName = GlobalConstant.OS_NAME.toLowerCase();
+
+            String driverInstanceName = driver.getWebDriver().toString().toLowerCase();
+
+            String browserDriverName = null;
+
+            if (driverInstanceName.contains("chrome")) {
+                browserDriverName = "chromedriver";
+            } else if (driverInstanceName.contains("internetexplorer")) {
+                browserDriverName = "IEDriverServer";
+            } else if (driverInstanceName.contains("firefox")) {
+                browserDriverName = "geckodriver";
+            } else if (driverInstanceName.contains("edge")) {
+                browserDriverName = "msedgedriver";
+            } else if (driverInstanceName.contains("opera")) {
+                browserDriverName = "operadriver";
+            } else {
+                browserDriverName = "safaridriver";
+            }
+
+            if (osName.contains("window")) {
+                cmd = "taskkill /F /FI \"IMAGENAME eq " + browserDriverName + "*\"";
+            } else {
+                cmd = "pkill " + browserDriverName;
+            }
+
+            if (driver != null) {
+                driver.quit();
+            }
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            try {
+                Process process = Runtime.getRuntime().exec(cmd);
+                process.waitFor();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

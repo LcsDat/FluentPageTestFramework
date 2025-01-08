@@ -7,5 +7,6 @@ public class GlobalConstant {
     public static final String TEST_OUTPUT_PATH = System.getProperty("user.dir") + File.separator + "allure-results";
     public static final String IMAGE_PATH = System.getProperty("user.dir") + File.separator + "Image";
     public static final String OWNER = "Hideyashy";
+    public static final String OS_NAME = System.getProperty("os.name");
 
 }

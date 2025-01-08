@@ -24,7 +24,7 @@ public class JobMasterData extends BaseTest {
         adminPage.selectTopBarItem("Job")
                 .selectDropDownItemName("Pay Grades")
                 .clickToButton("Add")
-                .setTextToField("Name", "Level 784")
+                .setTextToField("Name", "Level 785")
                 .clickToButton("Save")
                 .clickToButton("Add")
                 .selectACurrency("ALL - Albanian Lek")

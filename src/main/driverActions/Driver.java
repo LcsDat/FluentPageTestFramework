@@ -217,6 +217,11 @@ public class Driver implements FindElementAction, Navigation, Options, Control, 
     }
 
     @Override
+    public void quit() {
+        webDriver.quit();
+    }
+
+    @Override
     public void verifyTrue(boolean condition) {
         Assert.assertTrue(condition);
     }
