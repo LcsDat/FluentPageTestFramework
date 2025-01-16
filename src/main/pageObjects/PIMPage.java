@@ -1,5 +1,6 @@
 package pageObjects;
 
+import commons.GlobalConstant;
 import driverActions.Driver;
 import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
@@ -12,6 +13,7 @@ import java.util.List;
 public class PIMPage extends WebPageTopbarBodySection {
 
     private TableSection tableSection;
+
     public PIMPage(Driver driver) {
         super(driver);
         tableSection = new TableSection(driver);
@@ -56,7 +58,7 @@ public class PIMPage extends WebPageTopbarBodySection {
         return driver.findElementByXpath(String.format("//label[text()='%s']/parent::div/following-sibling::span", nameField));
     }
 
-    private CoreWebElement fileInput(){
+    private CoreWebElement fileInput() {
         return driver.findElementByCss("input[type='file']");
     }
 
@@ -65,7 +67,7 @@ public class PIMPage extends WebPageTopbarBodySection {
     }
 
     @Step("Get the image source")
-    public String getImageSource(){
+    public String getImageSource() {
         return image().getAttribute("currentSrc");
     }
 
@@ -168,12 +170,25 @@ public class PIMPage extends WebPageTopbarBodySection {
 
     @Step("Upload image")
     public PIMPage uploadImage(String filePath) {
-        try {
-            fileInput().uploadFile(filePath);
-        } catch (NoSuchElementException e) {
-            System.out.println("Already input");
-        }
+        fileInput().uploadFile(filePath);
 
+        return this;
+    }
+
+    @Step("Only one contract file is used, so we need to check if a contract is already uploaded or not." +
+            "Also, need to check if the existed contract is to the new contract." +
+            "In this case, to differentiate, the contract name should be different")
+    public PIMPage uploadContractDetails(String filePath) {
+        var splitPath = filePath.split("\\\\");
+        var newContractName = splitPath[splitPath.length - 1];
+        var contractInput = driver.findElementsByXpath("//label[text()='Contract Details']/parent::div/following-sibling::div/input");
+        if (contractInput.isEmpty()){
+            fileInput().uploadFile(filePath);
+        } else {
+            var replaceOption = driver.findElementByXpath("//label[string()='Replace Current']/input");
+            replaceOption.click();
+            fileInput().uploadFile(filePath);
+        }
         return this;
     }
 
@@ -187,11 +202,11 @@ public class PIMPage extends WebPageTopbarBodySection {
         return this;
     }
 
-    public PersonalDetailsSection getPersonalDetails(){
+    public PersonalDetailsSection getPersonalDetails() {
         return new PersonalDetailsSection(driver);
     }
 
-    public void findEmployeeById(String employeeId){
+    public void findEmployeeById(String employeeId) {
         String idRow = "//div[text()='%s']/parent::div/following-sibling::div[7]//button[2]";
 
         for (int i = 2; i <= tableSection.getTotalPage(); i++) {
@@ -207,16 +222,17 @@ public class PIMPage extends WebPageTopbarBodySection {
 
     }
 
-    private CoreWebElement dropdownOption(String label){
+    private CoreWebElement dropdownOption(String label) {
         return driver.findElementByXpath("//label[normalize-space()='%s']/parent::div/following-sibling::div//div[@class='oxd-select-text-input']", label);
     }
+
     public PIMPage setDropdown(String label, String value) {
         dropdownOption(label).setTextByJs(value);
         return this;
     }
 
 
-    private CoreWebElement employmentContractDetailsCheckbox(){
+    private CoreWebElement employmentContractDetailsCheckbox() {
         return driver.findElementByXpath("//p[normalize-space()='Include Employment Contract Details']/following-sibling::div");
     }
 
@@ -229,13 +245,13 @@ public class PIMPage extends WebPageTopbarBodySection {
         var checkboxStatus = driver.findElementByXpath("//p[normalize-space()='Include Employment Contract Details']/following-sibling::div//input").getAttribute("_modelValue");
         System.out.println(checkboxStatus);
 
-        if(status == true) {
-            if(checkboxStatus.equals("false")) {
+        if (status == true) {
+            if (checkboxStatus.equals("false")) {
                 employmentContractDetailsCheckbox().waitToBePresented();
                 employmentContractDetailsCheckbox().click();
             }
         } else {
-            if(checkboxStatus.equals("true")) {
+            if (checkboxStatus.equals("true")) {
                 employmentContractDetailsCheckbox().waitToBePresented();
                 employmentContractDetailsCheckbox().click();
             }

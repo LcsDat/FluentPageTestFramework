@@ -1,6 +1,7 @@
 import com.github.javafaker.Faker;
 import com.github.javafaker.service.FakeValuesService;
 import com.github.javafaker.service.RandomService;
+import commons.GlobalConstant;
 
 import java.io.Console;
 import java.io.File;
@@ -28,16 +29,8 @@ public class DemoSomething {
     }
 
     public static void main(String[] args) throws ParseException {
-        String date_s = " 2011-01-18 00:00:00.0";
-        SimpleDateFormat dt = new SimpleDateFormat("yyyyy-mm-dd hh:mm:ss");
-        Date date = dt.parse(date_s);
-        SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-mm-dd");
-        System.out.println(dt1.format(date));
-        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-
-        LocalDateTime a = LocalDateTime.now();
-        var b = a.plusYears(1);
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        System.out.println(GlobalConstant.IMAGE_PATH);
+        System.out.println(Arrays.toString(GlobalConstant.IMAGE_PATH.split("\\\\")));
     }
 
 }
