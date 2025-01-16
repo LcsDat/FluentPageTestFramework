@@ -1,3 +1,5 @@
+package driverActions;
+
 import org.openqa.selenium.WebDriver;
 
 public interface Control {

@@ -1,3 +1,8 @@
+package pageObjects;
+
+import driverActions.Driver;
+import webElement.CoreWebElement;
+
 public class MyInfoPage extends WebPage {
 
     public MyInfoPage(Driver driver) {

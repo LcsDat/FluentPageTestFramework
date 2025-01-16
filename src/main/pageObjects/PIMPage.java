@@ -1,13 +1,20 @@
+package pageObjects;
+
+import driverActions.Driver;
 import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.testng.Assert;
+import webElement.CoreWebElement;
 
 import java.util.List;
 
 public class PIMPage extends WebPageTopbarBodySection {
 
+    private TableSection tableSection;
     public PIMPage(Driver driver) {
         super(driver);
+        tableSection = new TableSection(driver);
     }
 
     public PIMPage setTextToField(String labelName, String value) {
@@ -147,22 +154,26 @@ public class PIMPage extends WebPageTopbarBodySection {
 
     public PIMPage verifyEmployeeInfoInTableById(String id, String headerName, String expectedValue) {
         String idRow = "//div[text()='%s']";
-        var table = new TableSection(driver);
 
-        for (int i = 2; i <= table.getTotalPage(); i++) {
+        for (int i = 2; i <= tableSection.getTotalPage(); i++) {
             var baseElement = driver.findElementsByXpath(idRow, id);
-            if (baseElement.isEmpty()) table.clickPage(i);
+            if (baseElement.isEmpty()) tableSection.clickPage(i);
             else break;
         }
-        var verifyText = table.getCellText(id, headerName);
-        driver.verifyEqual(expectedValue, table.getCellText(id, headerName));
+        var verifyText = tableSection.getCellText(id, headerName);
+        driver.verifyEqual(expectedValue, tableSection.getCellText(id, headerName));
 
         return this;
     }
 
     @Step("Upload image")
     public PIMPage uploadImage(String filePath) {
-        fileInput().uploadFile(filePath);
+        try {
+            fileInput().uploadFile(filePath);
+        } catch (NoSuchElementException e) {
+            System.out.println("Already input");
+        }
+
         return this;
     }
 
@@ -180,4 +191,55 @@ public class PIMPage extends WebPageTopbarBodySection {
         return new PersonalDetailsSection(driver);
     }
 
+    public void findEmployeeById(String employeeId){
+        String idRow = "//div[text()='%s']/parent::div/following-sibling::div[7]//button[2]";
+
+        for (int i = 2; i <= tableSection.getTotalPage(); i++) {
+            var baseElement = driver.findElementsByXpath(idRow, employeeId);
+            if (baseElement.isEmpty()) tableSection.clickPage(i);
+            else {
+//                baseElement.get(0).scrollByJs();
+                baseElement.get(0).moveToElement();
+                baseElement.get(0).click();
+                break;
+            }
+        }
+
+    }
+
+    private CoreWebElement dropdownOption(String label){
+        return driver.findElementByXpath("//label[normalize-space()='%s']/parent::div/following-sibling::div//div[@class='oxd-select-text-input']", label);
+    }
+    public PIMPage setDropdown(String label, String value) {
+        dropdownOption(label).setTextByJs(value);
+        return this;
+    }
+
+
+    private CoreWebElement employmentContractDetailsCheckbox(){
+        return driver.findElementByXpath("//p[normalize-space()='Include Employment Contract Details']/following-sibling::div");
+    }
+
+    /**
+     * Click to the EmploymentContractDetails button
+     *
+     * @param status Set true to enable button and vice versa
+     */
+    public PIMPage clickEmploymentContractDetails(Boolean status) {
+        var checkboxStatus = driver.findElementByXpath("//p[normalize-space()='Include Employment Contract Details']/following-sibling::div//input").getAttribute("_modelValue");
+        System.out.println(checkboxStatus);
+
+        if(status == true) {
+            if(checkboxStatus.equals("false")) {
+                employmentContractDetailsCheckbox().waitToBePresented();
+                employmentContractDetailsCheckbox().click();
+            }
+        } else {
+            if(checkboxStatus.equals("true")) {
+                employmentContractDetailsCheckbox().waitToBePresented();
+                employmentContractDetailsCheckbox().click();
+            }
+        }
+        return this;
+    }
 }

@@ -1,3 +1,5 @@
+package commons;
+
 public class RegexPattern {
     public static final String NO_UpperCase = "[a-z]{10}[0-9]{10}[!@#$%^&*()<>?{}]{10}";
     public static final String NO_LowerCase = "[A-Z]{10}[0-9]{10}[!@#$%^&*()<>?{}]{10}";

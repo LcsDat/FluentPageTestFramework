@@ -3,6 +3,10 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import pageObjects.HomePage;
+import pageObjects.PIMPage;
+import pageObjects.PageFactory;
+import pageObjects.PersonalDetailsSection;
 
 public class EmployeeInfoTestSuite extends BaseTest{
     HomePage homePage;

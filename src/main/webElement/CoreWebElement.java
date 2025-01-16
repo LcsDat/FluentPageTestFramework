@@ -1,4 +1,8 @@
+package webElement;
+
+import commons.GlobalConstant;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -7,17 +11,24 @@ public class CoreWebElement implements ElementAction, Wait, jsExecutorAction {
     private WebDriver webDriver;
     private By by;
     private JavascriptExecutor javascriptExecutor;
+    private Actions action;
 
     public CoreWebElement(WebDriver webDriver,WebElement webElement, By by) {
         this.webDriver = webDriver;
         this.webElement = webElement;
         this.by = by;
         this.javascriptExecutor = (JavascriptExecutor) webDriver;
+        this.action = new Actions(webDriver);
+    }
+
+    @Override
+    public void moveToElement() {
+        action.moveToElement(webElement).perform();
     }
 
     @Override
     public void click() {
-        waitToClick();
+//        waitToClick();
         webElement.click();
     }
 
@@ -83,7 +94,11 @@ public class CoreWebElement implements ElementAction, Wait, jsExecutorAction {
 
     @Override
     public void setTextByJs(String value) {
-        System.out.println(webElement.getAttribute("innerText"));
         javascriptExecutor.executeScript("arguments[0].innerText = '" + value + "'", webElement);
+    }
+
+    @Override
+    public void scrollByJs() {
+        javascriptExecutor.executeScript("arguments[0].scrollIntoView(false)", webElement);
     }
 }

@@ -1,5 +1,8 @@
+package pageObjects;
+
+import driverActions.Driver;
 import io.qameta.allure.Step;
-import org.openqa.selenium.Keys;
+import webElement.CoreWebElement;
 
 public abstract class WebPage {
     protected Driver driver;

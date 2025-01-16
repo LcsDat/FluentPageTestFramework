@@ -4,7 +4,13 @@ import com.github.javafaker.service.RandomService;
 
 import java.io.Console;
 import java.io.File;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Locale;
 
 public class DemoSomething {
@@ -21,7 +27,17 @@ public class DemoSomething {
 
     }
 
-    public static void main(String[] args) {
-        new DemoSomething().passwordExample();
+    public static void main(String[] args) throws ParseException {
+        String date_s = " 2011-01-18 00:00:00.0";
+        SimpleDateFormat dt = new SimpleDateFormat("yyyyy-mm-dd hh:mm:ss");
+        Date date = dt.parse(date_s);
+        SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-mm-dd");
+        System.out.println(dt1.format(date));
+        System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
+        LocalDateTime a = LocalDateTime.now();
+        var b = a.plusYears(1);
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     }
+
 }

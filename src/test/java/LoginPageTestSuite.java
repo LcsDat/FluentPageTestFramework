@@ -1,6 +1,9 @@
+import commons.GlobalConstant;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
 import org.testng.annotations.*;
+import pageObjects.LoginPage;
+import pageObjects.PageFactory;
 
 
 public class LoginPageTestSuite extends BaseTest {

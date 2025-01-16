@@ -1,3 +1,8 @@
+package pageObjects;
+
+import driverActions.Driver;
+import webElement.CoreWebElement;
+
 import java.util.List;
 
 public class TableSection extends WebPage {

@@ -1,5 +1,9 @@
+package pageObjects;
+
+import driverActions.Driver;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
+import webElement.CoreWebElement;
 
 public class PersonalDetailsSection extends PIMPage{
     public PersonalDetailsSection(Driver driver) {

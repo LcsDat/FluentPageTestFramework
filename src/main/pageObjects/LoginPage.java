@@ -1,5 +1,11 @@
+package pageObjects;
+
+import commons.GlobalConstant;
+import driverActions.Driver;
+import driverActions.Locator;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import webElement.CoreWebElement;
 
 public class LoginPage extends WebPage {
     private final String USERNAME_INPUT = "username";

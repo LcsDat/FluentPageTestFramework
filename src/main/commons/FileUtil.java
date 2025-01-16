@@ -1,3 +1,5 @@
+package commons;
+
 import org.apache.commons.io.FileUtils;
 
 import javax.imageio.IIOException;

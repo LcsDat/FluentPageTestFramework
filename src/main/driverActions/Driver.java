@@ -1,3 +1,7 @@
+package driverActions;
+
+import assertions.Verification;
+import commons.GlobalConstant;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -5,6 +9,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
+import webElement.CoreWebElement;
+import webElement.ElementFindingStrategy;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -81,7 +87,7 @@ public class Driver implements FindElementAction, Navigation, Options, Control, 
     }
 
     public CoreWebElement findElementByXpath(String locatorValue, String... varargs) {
-        var xpathStrategy = ElementFindingStrategy.getByXpath(String.format(locatorValue,  varargs));
+        var xpathStrategy = ElementFindingStrategy.getByXpath(String.format(locatorValue, varargs));
         var nativeElement = webDriver.findElement(xpathStrategy);
 
         return new CoreWebElement(webDriver, nativeElement, xpathStrategy);
@@ -239,8 +245,9 @@ public class Driver implements FindElementAction, Navigation, Options, Control, 
     /**
      * To verify an element undisplayed. This method will re-configure the implicit wait timeout
      * which will reduce the time returning condition, also testing run time.
+     *
      * @param locatorStrategy The strategy to locate the locator
-     * @param locatorValue The locator value
+     * @param locatorValue    The locator value
      * @param implicitTimeout set the implicit timeout
      */
     public void verifyUndisplayed(Locator locatorStrategy, String locatorValue, Duration implicitTimeout) {
@@ -248,8 +255,8 @@ public class Driver implements FindElementAction, Navigation, Options, Control, 
 
         try {
             webDriver.manage().timeouts().implicitlyWait(implicitTimeout);
-            isDisplayed = webDriver.findElement(getBy(locatorStrategy,locatorValue)).isDisplayed();
-        } catch (NoSuchElementException e){
+            isDisplayed = webDriver.findElement(getBy(locatorStrategy, locatorValue)).isDisplayed();
+        } catch (NoSuchElementException e) {
             isDisplayed = false;
         }
 
@@ -259,7 +266,7 @@ public class Driver implements FindElementAction, Navigation, Options, Control, 
 
     public void verifyValueInTable(List<CoreWebElement> headerElements, String locatorValue, String expectedValue, String... varargs) {
         var index = headerElements.size();
-        var element = driver.findElementByXpath(locatorValue + "[" + (index +1) + "]", varargs);
+        var element = driver.findElementByXpath(locatorValue + "[" + (index + 1) + "]", varargs);
         verifyEqual(expectedValue, element.getText());
 
     }

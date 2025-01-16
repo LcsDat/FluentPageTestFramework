@@ -1,3 +1,5 @@
+package assertions;
+
 import org.testng.Assert;
 
 public interface Verification {

@@ -1,3 +1,8 @@
+package pageObjects;
+
+import driverActions.Driver;
+import webElement.CoreWebElement;
+
 public class HomePage extends WebPage {
 
     private static final String DASHBOARD_HEADER = "//h6";

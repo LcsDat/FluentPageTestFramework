@@ -9,7 +9,7 @@
     <test name="Suite1">
         <classes>
             <!--            <class name="LoginPageTestSuite"/>-->
-            <class name="AdminRoleTestSuite"/>
+            <class name="AdminTestSuite"/>
             <!--            <class name="JobMasterData"></class>-->
         </classes>
     </test>
