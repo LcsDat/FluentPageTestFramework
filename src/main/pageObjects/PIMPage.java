@@ -5,6 +5,7 @@ import driverActions.Driver;
 import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import webElement.CoreWebElement;
 
@@ -182,10 +183,10 @@ public class PIMPage extends WebPageTopbarBodySection {
         var splitPath = filePath.split("\\\\");
         var newContractName = splitPath[splitPath.length - 1];
         var contractInput = driver.findElementsByXpath("//label[text()='Contract Details']/parent::div/following-sibling::div/input");
-        if (contractInput.isEmpty()){
+        if (!contractInput.isEmpty()){
             fileInput().uploadFile(filePath);
         } else {
-            var replaceOption = driver.findElementByXpath("//label[string()='Replace Current']/input");
+            var replaceOption = driver.findElementByXpath("//label[string()='Replace Current']/span");
             replaceOption.click();
             fileInput().uploadFile(filePath);
         }
@@ -243,7 +244,6 @@ public class PIMPage extends WebPageTopbarBodySection {
      */
     public PIMPage clickEmploymentContractDetails(Boolean status) {
         var checkboxStatus = driver.findElementByXpath("//p[normalize-space()='Include Employment Contract Details']/following-sibling::div//input").getAttribute("_modelValue");
-        System.out.println(checkboxStatus);
 
         if (status == true) {
             if (checkboxStatus.equals("false")) {

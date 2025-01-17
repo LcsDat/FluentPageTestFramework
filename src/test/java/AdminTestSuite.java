@@ -238,7 +238,7 @@ public class AdminTestSuite extends BaseTest {
         pimPage.clickEmploymentContractDetails(true)
                 .setTextToField("Contract Start Date", lcDT.format(dtF))
                 .setTextToField("Contract End Date", lcDT.plusYears(1).format(dtF))
-                .uploadImage(GlobalConstant.IMAGE_PATH + File.separator + "Lion.jpg")
+                .uploadContractDetails(GlobalConstant.IMAGE_PATH + File.separator + "Lion.jpg")
                 .clickToButton("Save");
     }
 }
