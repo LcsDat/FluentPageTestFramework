@@ -2,12 +2,8 @@ package commons;
 
 import org.apache.commons.io.FileUtils;
 
-import javax.imageio.IIOException;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Objects;
 
 public class FileUtil {

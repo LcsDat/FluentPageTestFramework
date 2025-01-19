@@ -1,7 +1,5 @@
 package webElement;
 
-import org.openqa.selenium.Keys;
-
 public interface ElementAction {
     void moveToElement();
     void click();
