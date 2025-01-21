@@ -1,7 +1,7 @@
 import com.github.javafaker.Faker;
 import com.github.javafaker.service.FakeValuesService;
 import com.github.javafaker.service.RandomService;
-import commons.FileUtil;
+import utils.FileUtil;
 import commons.GlobalConstant;
 import driverActions.Driver;
 import io.qameta.allure.Allure;
@@ -10,6 +10,7 @@ import io.qameta.allure.Step;
 import org.testng.annotations.AfterSuite;
 import pageObjects.LoginPage;
 import pageObjects.PageFactory;
+import utils.Attachment;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -25,13 +26,13 @@ public class BaseTest {
 //        quickAdminLogin(browser,URL);
 //    }
 
-//    @Description("Test Suite Tear down")
-//    @AfterSuite(alwaysRun = true)
-//    public void afterSuite() {
-//
-//        Allure.step("Quit all browsers");
-//        killBrowserDriver();
-//    }
+    @Description("Test Suite Tear down")
+    @AfterSuite(alwaysRun = true)
+    public void afterSuite() {
+
+        Allure.step("Quit all browsers");
+        killBrowserDriver();
+    }
 
     protected Faker gentFaker(Locale locale) {
         return new Faker(locale);
@@ -67,6 +68,8 @@ public class BaseTest {
         driver.startBrowser(browser);
         driver.goToUrl(URL);
         LoginPage loginPage = PageFactory.getInstance().getLoginPage(driver);
+
+
         loginPage.setTextUsername("hideyashy").setTextPassword("#Onimusha00").clickLogin();
     }
 

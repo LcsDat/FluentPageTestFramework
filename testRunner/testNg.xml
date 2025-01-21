@@ -6,6 +6,9 @@
     <parameter name="browser" value="chrome"></parameter>
     <parameter name="url" value="http://localhost:90"></parameter>
 
+    <listeners>
+        <listener class-name="commons.AllureListener"/>
+    </listeners>
     <test name="Suite1">
         <classes>
             <!--            <class name="LoginPageTestSuite"/>-->

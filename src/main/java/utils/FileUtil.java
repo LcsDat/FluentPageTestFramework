@@ -1,4 +1,4 @@
-package commons;
+package utils;
 
 import org.apache.commons.io.FileUtils;
 
@@ -6,8 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-public class FileUtil {
-
+public class FileUtil{
     public static void deleteFiles(String filePath){
         File file = new File(filePath);
         System.out.println("Attempt to delete files in " + filePath);
