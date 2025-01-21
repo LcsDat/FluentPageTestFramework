@@ -26,13 +26,13 @@ public class BaseTest {
 //        quickAdminLogin(browser,URL);
 //    }
 
-    @Description("Test Suite Tear down")
-    @AfterSuite(alwaysRun = true)
-    public void afterSuite() {
-
-        Allure.step("Quit all browsers");
-        killBrowserDriver();
-    }
+//    @Description("Test Suite Tear down")
+//    @AfterSuite(alwaysRun = true)
+//    public void afterSuite() {
+//
+//        Allure.step("Quit all browsers");
+//        killBrowserDriver();
+//    }
 
     protected Faker gentFaker(Locale locale) {
         return new Faker(locale);

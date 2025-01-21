@@ -28,7 +28,7 @@ public class CoreWebElement implements ElementAction, Wait, jsExecutorAction {
 
     @Override
     public void click() {
-//        waitToClick();
+        waitToClick();
         webElement.click();
     }
 
@@ -100,5 +100,10 @@ public class CoreWebElement implements ElementAction, Wait, jsExecutorAction {
     @Override
     public void scrollByJs() {
         javascriptExecutor.executeScript("arguments[0].scrollIntoView(false)", webElement);
+    }
+
+    @Override
+    public void clickByJS() {
+        javascriptExecutor.executeScript("arguments[0].click()", webElement);
     }
 }

@@ -1,6 +1,5 @@
 package pageObjects;
 
-import commons.GlobalConstant;
 import driverActions.Driver;
 import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
@@ -208,13 +207,16 @@ public class PIMPage extends WebPageTopbarBodySection {
     public void findEmployeeById(String employeeId) {
         String idRow = "//div[text()='%s']/parent::div/following-sibling::div[7]//button[2]";
 
-        for (int i = 2; i <= tableSection.getTotalPage(); i++) {
-            var baseElement = driver.findElementsByXpath(idRow, employeeId);
-            if (baseElement.isEmpty()) tableSection.clickPage(i);
+        for (int i = 1; i <= tableSection.getTotalPage(); i++) {
+            tableSection.clickPage(i);
+             var baseElement = driver.findElementsByXpath(idRow, employeeId);
+            if (baseElement.isEmpty()) {
+                tableSection.clickPage(i);
+            }
             else {
-//                baseElement.get(0).scrollByJs();
-                baseElement.get(0).moveToElement();
-                baseElement.get(0).click();
+                baseElement.get(0).scrollByJs();
+                baseElement.get(0).clickByJS();
+
                 break;
             }
         }
