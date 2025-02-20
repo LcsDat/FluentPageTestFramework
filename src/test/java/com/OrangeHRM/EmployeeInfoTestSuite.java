@@ -1,3 +1,5 @@
+package com.OrangeHRM;
+
 import io.qameta.allure.Description;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -8,7 +10,7 @@ import pageObjects.PIMPage;
 import pageObjects.PageFactory;
 import pageObjects.PersonalDetailsSection;
 
-public class EmployeeInfoTestSuite extends BaseTest{
+public class EmployeeInfoTestSuite extends BaseTest {
     HomePage homePage;
     PIMPage pimPage;
     PersonalDetailsSection personalDetailsSection;

@@ -1,3 +1,5 @@
+package com.OrangeHRM;
+
 import commons.GlobalConstant;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;

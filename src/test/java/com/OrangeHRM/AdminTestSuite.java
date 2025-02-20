@@ -1,9 +1,9 @@
+package com.OrangeHRM;
+
 import commons.GlobalConstant;
 import commons.RegexPattern;
 import io.qameta.allure.*;
 import io.qameta.allure.testng.Tag;
-import org.testng.Assert;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;

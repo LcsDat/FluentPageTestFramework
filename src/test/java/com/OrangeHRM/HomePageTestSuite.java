@@ -1,11 +1,12 @@
+package com.OrangeHRM;
+
 import driverActions.Driver;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
 import pageObjects.PageFactory;
 
-public class HomePageTestSuite extends BaseTest{
+public class HomePageTestSuite extends BaseTest {
     HomePage homePage;
 
     @BeforeClass

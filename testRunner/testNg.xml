@@ -11,9 +11,9 @@
     </listeners>
     <test name="Suite1">
         <classes>
-            <!--            <class name="LoginPageTestSuite"/>-->
-            <class name="AdminTestSuite"/>
-            <!--            <class name="JobMasterData"></class>-->
+            <!--            <class name="com.OrangeHRM.LoginPageTestSuite"/>-->
+            <class name="com.OrangeHRM.AdminTestSuite"/>
+            <!--            <class name="com.OrangeHRM.JobMasterData"></class>-->
         </classes>
     </test>
 </suite>
