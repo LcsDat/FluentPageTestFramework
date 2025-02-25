@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import webElement.CoreWebElement;
 import webElement.ElementFindingStrategy;
@@ -98,6 +99,13 @@ public class Driver implements FindElementAction, Navigation, Options, Control, 
         var nativeElement = webDriver.findElement(cssStrategy);
 
         return new CoreWebElement(webDriver, nativeElement, cssStrategy);
+    }
+
+    public Select getSelectByID(String locator) {
+        return  new Select(webDriver.findElement(By.id(locator)));
+    }
+    public Select getSelectByXpatj(String locator) {
+        return  new Select(webDriver.findElement(By.xpath(locator)));
     }
 
     public CoreWebElement findElementByCss(String locatorValue, String... varargs) {
@@ -230,6 +238,7 @@ public class Driver implements FindElementAction, Navigation, Options, Control, 
     @Override
     public void verifyTrue(boolean condition) {
         Assert.assertTrue(condition);
+
     }
 
     @Override

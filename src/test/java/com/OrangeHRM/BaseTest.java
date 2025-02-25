@@ -35,7 +35,7 @@ public class BaseTest {
         killBrowserDriver();
     }
 
-    protected Faker gentFaker(Locale locale) {
+    protected Faker getFaker(Locale locale) {
         return new Faker(locale);
     }
 

@@ -4,6 +4,7 @@ import commons.GlobalConstant;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CoreWebElement implements ElementAction, Wait, jsExecutorAction {
@@ -75,6 +76,19 @@ public class CoreWebElement implements ElementAction, Wait, jsExecutorAction {
     @Override
     public void uploadFile(String filePath) {
         webElement.sendKeys(filePath);
+    }
+
+//    @Override
+    public void defaultSelectByValue( String itemName) {
+        waitToClick();
+        Select select = new Select(webElement);
+        select.selectByValue(itemName);
+    }
+
+    public void defaultSelectByText( String itemName) {
+        waitToClick();
+        Select select = new Select(webElement);
+        select.selectByVisibleText(itemName);
     }
 
     @Override

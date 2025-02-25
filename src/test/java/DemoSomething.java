@@ -1,18 +1,9 @@
-import com.github.javafaker.Faker;
-import com.github.javafaker.service.FakeValuesService;
-import com.github.javafaker.service.RandomService;
-import commons.GlobalConstant;
-
 import java.io.Console;
 import java.io.File;
-import java.text.DateFormat;
+import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Locale;
+import java.util.List;
+import java.util.Map;
 
 public class DemoSomething {
     public void passwordExample() {
@@ -28,9 +19,28 @@ public class DemoSomething {
 
     }
 
-    public static void main(String[] args) throws ParseException {
-        System.out.println(GlobalConstant.IMAGE_PATH);
-        System.out.println(Arrays.toString(GlobalConstant.IMAGE_PATH.split("\\\\")));
+    public static void main(String[] args) throws ParseException, IOException {
+//        WebDriver driver = new ChromeDriver();
+//        driver.manage().window().maximize();
+//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+//        driver.get("https://www.youtube.com/");
+//
+//        driver.findElement(By.cssSelector("form.ytSearchboxComponentSearchForm > input")).sendKeys("Say trong nu cuoi");
+//        driver.findElement(By.cssSelector("form.ytSearchboxComponentSearchForm > input")).sendKeys(Keys.ENTER);
+//
+//        driver.findElement(By.xpath("//a[contains(@title,'TĂNG DUY TÂN x DRUM7 | SAY TRONG NỤ CƯỜI')]")).click();
+
+        ProcessBuilder builder = new ProcessBuilder();
+        builder.command("cmd.exe", "/c", "start");
+//        builder.directory(new File(System.getProperty("user.home")));
+        System.out.println(System.getProperty("os.name"));
+        Process process = builder.start();
+        builder.command("cmd.exe", "/c", "cd D:\\Work\\Automation");
+        process = builder.start();
+//        var processs = new ProcessBuilder("cmd", "/c", "DIR")
+//                .redirectOutput(ProcessBuilder.Redirect.INHERIT)
+//                .start();
+        System.out.println(System.getProperty("user.home"));
     }
 
 }
